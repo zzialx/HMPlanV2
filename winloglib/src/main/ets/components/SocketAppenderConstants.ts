@@ -16,7 +16,6 @@
 import {
   ConsoleAppender, FileAppender, Level,
   LogManager,
-  PatternLayout,
 } from '@pie/log4a';
 
 export function LogExit() {
@@ -25,16 +24,9 @@ export function LogExit() {
 export function InitializeAllLoggers(logFilePath: string) {
 
   LogManager.setLogFilePath(logFilePath);
-  // LogManager.getLogger('Log4a');
-    // .addFileAppender('Wlog.log', 'mainAppender', Level.INFO, {
-    //   maxCacheCount: 10,
-    //   maxFileSize: 10,
-    //   expireTime: 5,
-    //   useWorker: true
-    // })
-  const fileAppender_a = new FileAppender('Wlog.log', 'main', Level.ALL, {
+  const fileAppender_a = new FileAppender('WLog.log', 'main', Level.ALL, {
     useWorker: true,
-    maxFileSize: 3000,
+    maxFileSize: 1000,
     maxCacheCount: 5
   });
   LogManager.bindAppenderGlobally(fileAppender_a)

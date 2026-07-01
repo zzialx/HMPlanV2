@@ -50,8 +50,5 @@ export default class CommonGlobalConstants{
   // 17.缩略图地址
   public static ThumbnailHost = 'thumbnailHost'
 
-  //18.分销规则key
-  static readonly ProdSpec_Key = "PRODSPEC";
-
 
 }

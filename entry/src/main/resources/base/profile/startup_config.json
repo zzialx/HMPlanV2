@@ -5,12 +5,6 @@
       "srcEntry": "./ets/startup/HMRouterInitStartupTask.ets",
       "runOnThread": "mainThread",
       "waitOnMainThread": true
-    },
-    {
-      "name": "HMDataBaseInitStartupTask",
-      "srcEntry": "./ets/startup/HMDataBaseInitStartupTask.ets",
-      "runOnThread": "mainThread",
-      "waitOnMainThread": true
     }
   ],
   "configEntry": "./ets/startup/StartupConfig.ets"

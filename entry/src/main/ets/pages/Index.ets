@@ -3,6 +3,7 @@ import { AttributeUpdater } from '@kit.ArkUI';
 import { uiObserver } from '@kit.ArkUI';
 import { PageDurationLifecycle } from '../lifecycle/PageDurationLifecycle';
 import { JumpInfoInterceptor } from '../interceptor/JumpInfoInterceptor';
+import { getUserAgent } from '../utils/DeviceUtils';
 
 @Entry
 @ComponentV2
@@ -10,6 +11,7 @@ struct Index {
   modifier: NavModifier = new NavModifier();
   aboutToAppear(): void {
     console.info('Index.aboutToAppear');
+    getUserAgent();
     HMRouterMgr.registerGlobalLifecycle({
       lifecycle: new PageDurationLifecycle,
       lifecycleName: 'PageDuration',
@@ -39,7 +41,6 @@ struct Index {
       HMNavigation({
         navigationId: 'mainNavigationId',
         homePageUrl: 'MainPage',
-        // homePageUrl: 'LoginPage',
         options: {
           standardAnimator: HMDefaultGlobalAnimator.STANDARD_ANIMATOR,
           modifier: this.modifier

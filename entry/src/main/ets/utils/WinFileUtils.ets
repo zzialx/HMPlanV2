@@ -1,7 +1,10 @@
 import { DateUtil, FileUtil } from "@pura/harmony-utils";
 import { CommonFileConstants } from "../common/constants/CommonFileConstants";
 import WinLog from "./WinLog";
+import { UploadFile } from "./AxiosClient";
 import { BusinessError, zlib } from "@kit.BasicServicesKit";
+import { LXPostFileModel } from "../common/bean/LXPostFileResp";
+import { uploadResource } from "../common/api/uploadFileApi";
 
 /**
  * 文件工具类
@@ -25,14 +28,14 @@ export class WinFileUtils {
       FileUtil.mkdirSync(CommonFileConstants.UploadLogDir);
 
       // 图片缓存目录
-      // FileUtil.rmdirSync(CommonFileConstants.PhotoCachePath);
-      // FileUtil.mkdirSync(CommonFileConstants.PhotoCachePath);
+      FileUtil.rmdirSync(CommonFileConstants.PhotoCachePath);
+      FileUtil.mkdirSync(CommonFileConstants.PhotoCachePath);
 
     } catch (err) {
       // 异常兜底创建目录
       FileUtil.mkdirSync(CommonFileConstants.TempUploadLogDir);
       FileUtil.mkdirSync(CommonFileConstants.UploadLogDir);
-      // FileUtil.mkdirSync(CommonFileConstants.PhotoCachePath);
+      FileUtil.mkdirSync(CommonFileConstants.PhotoCachePath);
 
       WinLog.error(`[WinFileUtils] initLogFile err: ${(err as Error)?.message}`);
     }
@@ -107,12 +110,12 @@ export class WinFileUtils {
   private static async uploadFile(path: string): Promise<void> {
     WinLog.debug(`[WinFileUtils] 压缩包路径：${path}`);
 
-    // const file: UploadFile = {
-    //   uri: path,
-    //   fileName: "upload.zip",
-    //   mimeType: "zip"
-    // };
-    // const res = await uploadResource('log',file,'1')
+    const file: UploadFile = {
+      uri: path,
+      fileName: "upload.zip",
+      mimeType: "zip"
+    };
+    const res = await uploadResource('log',file,'1')
     // uploadLogMine(file, "1")
     //   .then((res:LXPostFileModel) => {
     //     WinLog.info(`[WinFileUtils] 上传日志成功：${JSON.stringify(res)}`);

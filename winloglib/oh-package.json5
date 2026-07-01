@@ -6,7 +6,7 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "@pie/log4a": "1.5.8",
+    "@pie/log4a": "1.5.16",
     "@ohos/mail": "2.0.0"
   }
 }

@@ -17,7 +17,4 @@ export class Log4a {
   error(args: string): void {
     this.logger.error(args)
   }
-  warn(args: string): void {
-    this.logger.warn(args)
-  }
 }

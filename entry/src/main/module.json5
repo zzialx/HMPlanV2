@@ -5,6 +5,7 @@
     "appStartup": "$profile:startup_config",
     "description": "$string:module_desc",
     "mainElement": "EntryAbility",
+    "querySchemes": ["amapuri","baidumap"],
     "deviceTypes": [
       "phone"
     ],
@@ -28,6 +29,15 @@
             ],
             "actions": [
               "ohos.want.action.home"
+            ],
+            "uris": [
+              {
+                // 允许打开uri中以file://协议开头标识的本地文件
+                "scheme": "file", // 必填，声明协议类型为文件
+                "type": "general.plain-text", // 必填，表示支持打开的文件类型
+                "linkFeature": "FileOpen" // 必填，表示此URI的功能为文件打开
+              }
+              // ...
             ]
           }
         ]
@@ -45,6 +55,86 @@
             "resource": "$profile:backup_config"
           }
         ],
+      }
+    ],
+    "requestPermissions": [
+      {
+        "name": "ohos.permission.INTERNET",
+        "usedScene": {
+          "abilities": [
+            "用于网络请求","上传数据",'用于加载网页','加载网络图片'
+          ],
+          "when": "always"
+        }
+      },
+      {
+        "name": "ohos.permission.APPROXIMATELY_LOCATION",
+        "reason": "$string:location_reason",
+        "usedScene": {
+          "abilities": [
+            "门店拜访显示距离"
+          ],
+          "when": "always"
+        }
+      },
+      {
+        "name": "ohos.permission.LOCATION",
+        "reason": "$string:location_reason",
+        "usedScene": {
+          "abilities": [
+            "门店拜访显示距离"
+          ],
+          "when": "always"
+        }
+      },
+      {
+        "name": "ohos.permission.CAMERA",
+        "reason": "$string:location_reason",
+        "usedScene": {
+          "abilities": [
+            "门店拜访更新门头照"
+          ],
+          "when": "always",
+        }
+      },
+      {
+        "name": "ohos.permission.GET_NETWORK_INFO",
+        "reason": "$string:network_reason",
+        "usedScene": {
+          "abilities": [
+            "更新页面显示状态"
+          ],
+          "when": "always"
+        }
+      },
+      { "name": "ohos.permission.BUNDLE_ACTIVE_INFO",
+        "reason": "$string:network_reason",
+        "usedScene": {
+          "abilities": [
+            "推断服务器准确时间"
+          ],
+          "when": "always"
+        }
+      },
+            {
+              "name": "ohos.permission.READ_IMAGEVIDEO",
+              "reason": "$string:imageVideo_reason",
+              "usedScene": {
+                "abilities": [
+                  "门店拜访更新门头照，或者拍摄货架"
+                ],
+                "when": "always"
+              }
+            },
+      {
+        "name": "ohos.permission.READ_MEDIA",
+        "reason": "$string:write_reason",
+        "usedScene": {
+          "abilities": [
+            "照片存储到沙盒"
+          ],
+          "when": "always"
+        }
       }
     ]
   }

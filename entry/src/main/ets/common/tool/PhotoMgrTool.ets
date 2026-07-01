@@ -3,6 +3,7 @@ import { PhotoHelper } from "@pura/picker_utils";
 import { BusinessError } from '@ohos.base';
 import WinLog from "../../utils/WinLog";
 import { AppUtil, FileUtil } from "@pura/harmony-utils";
+import { CommonFileConstants } from "../constants/CommonFileConstants";
 import { fileIo } from '@kit.CoreFileKit';
 import { util } from '@kit.ArkTS';
 import { image } from '@kit.ImageKit';

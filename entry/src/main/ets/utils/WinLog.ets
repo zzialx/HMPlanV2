@@ -21,9 +21,6 @@ class WinLog {
     }
     this.logger.info(WinLog.TAG + args)
   }
-  warn(args: string): void {
-    this.logger.warn(WinLog.TAG + args)
-  }
   error(args: string): void {
     this.logger.error(WinLog.TAG + args)
   }

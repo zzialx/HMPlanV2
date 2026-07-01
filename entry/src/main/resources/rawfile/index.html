@@ -1,0 +1,91 @@
+<!Document>
+    <html>
+
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="yes" name="apple-mobile-web-app-capable" />
+        <meta content="yes" name="apple-touch-fullscreen" />
+        <meta content="telephone=no" name="format-detection" />
+        <title>WebViewJavascriptBridge</title>
+    </head>
+
+    <body>
+        <script>
+            window.onerror = function (err) {
+                log('window.onerror 出错: ' + err)
+            }
+
+            function setupWebViewJavascriptBridge(callback) {
+                if (window.WebViewJavascriptBridge) { return callback(WebViewJavascriptBridge); }
+                if (window.WVJBCallbacks) { return window.WVJBCallbacks.push(callback); }
+                window.WVJBCallbacks = [callback];
+                var WVJBIframe = document.createElement('iframe');
+                WVJBIframe.style.display = 'none';
+                WVJBIframe.src = 'https://__bridge_loaded__';
+                document.documentElement.appendChild(WVJBIframe);
+                setTimeout(function () { document.documentElement.removeChild(WVJBIframe) }, 0)
+            }
+
+            setupWebViewJavascriptBridge(function (bridge) {
+                var uniqueId = 1
+                function log(message, data) {
+                    var log = document.getElementById('log')
+                    var el = document.createElement('div')
+                    var dataStr = data ? JSON.stringify(data) : ""
+                    el.className = 'logLine'
+                    el.innerHTML = '【' + uniqueId++ + '】' + message + ':<br/>' + dataStr + '<br/>'
+                    if (log.children.length) { log.insertBefore(el, log.children[0]) }
+                    else { log.appendChild(el) }
+                }
+
+                bridge.registerHandler('getH5Info', function (data, responseCallback) {
+                    log('原生调用 getH5Info 方法', data)
+                    var responseData = { 'H5Info': '运行时 H5 给的另一些信息', '参数': JSON.stringify(data) }
+                    log('JS 返回信息', responseData)
+                    responseCallback(responseData)
+                })
+                bridge.registerHandler('start', function (data, responseCallback) {
+                    log('原生调用 start 方法', data)
+                    data = 'start info'
+                    var responseData = { 'H5Info': 'start', '参数': JSON.stringify(data) }
+                    log('JS 返回信息', responseData)
+                    responseCallback(responseData)
+                })
+                bridge.callHandler('init', { 'userId': '107197' }, function (response) {
+                        log('html初始化获取到数据', response)
+                    })
+                document.body.appendChild(document.createElement('br'))
+
+                var callbackButton = document.getElementById('buttons').appendChild(document.createElement('button'))
+                callbackButton.innerHTML = '原生注册方法，h5 从原生获取信息'
+                callbackButton.onclick = function (e) {
+                    e.preventDefault()
+                    log('JS 调用方法 "getNativeInfo" 方法')
+                    bridge.callHandler('getNativeInfo', { 'key': 'value' }, function (response) {
+                        log('JS 获取到数据', response)
+                    })
+                }
+                var callbackButton = document.getElementById('buttons1').appendChild(document.createElement('button'))
+                callbackButton.innerHTML = '从原生获取拍照信息'
+                callbackButton.onclick = function (e) {
+                    e.preventDefault()
+                    log('JS 调用方法 "takePhoto" 方法')
+                    bridge.callHandler('takePhoto', { 'storeId': '107197' }, function (response) {
+                        log('JS 获取到数据', response)
+                    })
+                }
+            })
+        </script>
+
+        <h2>WebViewJavascriptBridge</h2>
+
+        <div id='buttons'>获取原生信息</div>
+        <div id='buttons1'>拍照</div>
+
+        <br/>
+        <div id='log'>11111</div>
+
+    </body>
+
+    </html>
