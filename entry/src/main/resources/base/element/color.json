@@ -1,0 +1,28 @@
+{
+  "color": [
+    {
+      "name": "start_window_background",
+      "value": "#FFFFFF"
+    },
+    {
+      "name": "input_bg_color",
+      "value": "#eFeFeF"
+    },
+    {
+      "name": "main_nav_bg_color",
+      "value": "#31ea00"
+    },
+    {
+      "name": "login_btn_bg_color",
+      "value": "#31ea00"
+    },
+    {
+      "name": "login_sso_btn_bg_color",
+      "value": "#000000"
+    },
+    {
+      "name": "login_sso_btn_text_color",
+      "value": "#ffffff"
+    }
+  ]
+}
