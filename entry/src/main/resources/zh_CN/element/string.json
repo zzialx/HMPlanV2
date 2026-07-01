@@ -1,0 +1,138 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "模块描述"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "主程序入口"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "WinSFA"
+    },
+    {
+      "name": "login_page",
+      "value": "登录界面"
+    },
+    {
+      "name": "login_more",
+      "value": "登录帐号以使用更多服务"
+    },
+    {
+      "name": "account",
+      "value": "用户名"
+    },
+    {
+      "name": "password",
+      "value": "密码"
+    },
+    {
+      "name": "login",
+      "value": "登录"
+    },
+    {
+      "name": "register_account",
+      "value": "关于"
+    },
+    {
+      "name": "forgot_password",
+      "value": "找回密码"
+    },
+    {
+      "name": "message_login",
+      "value": "记住用户名"
+    },
+    {
+      "name": "my_love",
+      "value": "店员教育"
+    },
+    {
+      "name": "history_record",
+      "value": "坐标采集"
+    },
+    {
+      "name": "message",
+      "value": "我的信息"
+    },
+    {
+      "name": "shopping_cart",
+      "value": "调查问卷"
+    },
+    {
+      "name": "my_goal",
+      "value": "我的目标"
+    },
+    {
+      "name": "group",
+      "value": "圈子"
+    },
+    {
+      "name": "favorites",
+      "value": "收藏"
+    },
+    {
+      "name": "recycle_bin",
+      "value": "回收站"
+    },
+    {
+      "name": "main_page",
+      "value": "首页"
+    },
+    {
+      "name": "mine_page",
+      "value": "我的"
+    },
+    {
+      "name": "main_page_rankings",
+      "value": "排行榜"
+    },
+    {
+      "name": "main_page_others",
+      "value": "厦门站，我们不见不散"
+    },
+    {
+      "name": "main_page_new",
+      "value": "新品首发"
+    },
+    {
+      "name": "main_Page_brand",
+      "value": "大牌闪购"
+    },
+    {
+      "name": "main_page_more",
+      "value": "更多大牌"
+    },
+    {
+      "name": "main_page_found",
+      "value": "发现好物"
+    },
+    {
+      "name": "mine_title_name",
+      "value": "李先生"
+    },
+    {
+      "name": "mine_title_email",
+      "value": "2000000@shenhua.cc"
+    },
+    {
+      "name": "mine_list_news",
+      "value": "推送通知"
+    },
+    {
+      "name": "mine_list_data",
+      "value": "数据管理"
+    },
+    {
+      "name": "alert_title",
+      "value": "标题"
+    },{
+      "name": "alert_confirm_title",
+      "value": "确认"
+    },{
+      "name": "alert_cancel_title",
+      "value": "取消"
+    }
+  ]
+}

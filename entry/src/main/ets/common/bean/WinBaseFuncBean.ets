@@ -1,0 +1,130 @@
+export interface WinBaseFuncBean {
+  _id?: number;
+  pk: string;
+  fk: string;
+  userId: string;
+  fc: string;
+  fv: string;
+  name: string;
+  required?: string;
+  opt?: WinOptModel;
+  ds?: string;
+  filter?: string;
+  param?: Array<WinFuncBeanParamModel>;
+  styp?: string;
+  isAcvtList?: string;
+  sort?: string;
+  levelCode?: string;
+  submenu?: string;
+  redis?: string;
+  sqlw?: string;
+  icon?: string;
+  subCode?: string;
+  script?: string;
+  menuType?: string;
+  spec?: string;
+  pageTag?:string;
+
+  nullvalue?: string;
+  sendRequest?: string;
+  dateTyp?: string;
+  lockCol?: string;
+  parentId?: string;
+}
+export class WinSpecModel {
+
+  ds?: string;
+  nullvalue?: string;
+  required?: string;
+  filter?: string;
+  redis?: string;
+  isAcvtList?: string;
+  sendRequest?: string;
+  icon?: string;
+  param?: Array<WinFuncBeanParamModel> = undefined;
+  dateTyp?: string;
+  lockCol?: string;
+  submenu?: string;
+  styp?: string;
+  opt?: WinOptModel = undefined;
+  pageTag?:string = ''
+}
+export interface WinOptModel {
+
+  name?: string;
+  isAdd?: string;
+  searchTag?: string;
+  spestorelist?: string;
+  spestoreSearchList?: string;
+  acvtdisSpestoreUpdateEcho?: string;
+  deleteButton?: string;
+  jumpPrivacyAgreement?: string;
+  jumpUrlLink?: string;
+  routeSearchurl?: string;
+  storeListAcvtCode?: string;
+  acvtSearch?: string;
+  isSearchable?: string;
+  parentStoreFc?: string;
+  isTipsMenu?: string;
+  visitMax?:string;
+  sendRequest?:string;
+  isUseNewId?:string;
+  isCheckEnterStore?:string;
+  refreshNodeName?:string;
+  searchQuestion?:string;
+  isGps?:string;
+  distancesSort?:string;
+  addFilterType?:string;
+  visitTimeSort?:string;
+  mOrderByDis?:string;
+}
+export interface WinFuncBeanParamModel {
+  charNum?: string;
+  col?: string;
+  name?: string;
+  tpy?: string;
+  wcol?: number;
+  max?: string;
+  min?: string;
+  pcs?: string;
+  // readonly?:number;
+  redis?: string;
+  value?: string;
+  listener?: string;
+  filter?: string;
+  isMutex?: number;
+  buttonname?: string;
+  isReq?: string;
+  answerColor?: string;
+  valueSize?: string;
+  iSelectionItems?: string[];
+  iDefaultItemIndex?: number;
+  isfilled?: string;
+  idefault?: string;
+  isSupperLocalPhoto?: boolean;
+  isSupportEdit?: boolean;
+  hints?: string;
+  sort?: number;
+  isRealtime?: boolean;
+  ids?: string;
+  iDependon?: string;
+  mappingAcvtQstDs?: string;
+  alert?: string;
+  reg?: string;
+  gone?: string;
+  tip?: string;
+  mappingAcvtQstId?: string;
+  isHidden?: string;
+  align?: string;
+  paramDescript?: string;
+  groupName?: string;
+  widthPercent?: string;
+  hideQstName?: string;
+  AddEdit?: string;
+  needValidateMoreProdRedisValue?: string;
+  isNotUploadEmpty?: boolean;
+  parent?: string;
+  isRedisNoMoreHome?: string;
+  coljumpinput?: string;
+  ispopup?: string;
+}
