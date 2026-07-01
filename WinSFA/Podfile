@@ -1,0 +1,53 @@
+source 'https://github.com/CocoaPods/Specs.git'
+#source 'https://gitee.com/mirrors/CocoaPods-Specs'
+
+platform :ios, '11.0'
+
+target 'WinSFA' do
+
+	pod 'FMDB', '2.5'
+    pod 'YYModel', '1.0.3'
+    pod 'MJRefresh', '3.0.3'
+    pod 'Masonry', '1.1.0'
+    pod 'PureLayout', '3.0.2'
+    pod 'MarqueeLabel', '3.1.4'
+    pod 'ReactiveCocoa', '~> 2.5'
+    pod 'Aspects', '~> 1.4.1'
+    pod 'MJExtension'
+    pod 'CTMediator'
+    pod 'lottie-ios', '~> 2.5.3'
+    pod 'AliyunOSSiOS', '2.10.15'
+    pod 'AFNetworking','4.0.1'
+    pod 'BaiduMapKit','5.2.0'
+    pod 'BMKLocationKit','2.0.0'
+    pod 'IQKeyboardManager'
+    pod 'TensorFlowLite','~>1.13.1'
+    pod 'JKCategories'
+    pod "TZImagePickerController"
+    
+    pod 'UMCommon'
+    pod 'UMPush'
+    pod 'UMCSecurityPlugins'
+
+    pod 'LenztechBusinessSDK/remake',:git=>'https://gitlab.langjtech.com/open/LenztechBusinessSDK.git',:tag => '0.5.4.8'
+    #pod 'LenztechBusinessSDK',:git=>'https://gitlab.langjtech.com/open/LenztechBusinessSDK.git',:tag => '0.5.4.7'
+
+    pod 'SVProgressHUD'
+    pod 'LBXZBarSDK','~> 1.3'
+    pod 'RongCloudIM/IMKit', '~> 5.32.0'
+    pod 'RongCloudRTC','~> 5.32.0'
+    #pod 'RongCloudIM/IMKit', '~> 5.7.3'
+    #pod 'RongCloudRTC/RongCallKit','~> 5.7.0'
+
+end
+post_install do |installer|
+    installer.pods_project.targets.each do |target|
+        target.build_configurations.each do |config|
+            config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '11.0'
+            if target.respond_to?(:product_type) and target.product_type == "com.apple.product-type.bundle"
+                config.build_settings['CODE_SIGNING_ALLOWED'] = 'NO'
+            end
+        end
+    end
+end
+

@@ -1,0 +1,792 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>update_6</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE wch_addStore add column IS_LOCAL VARCHAR(30) DEFAULT NULL;</string>
+	</dict>
+	<key>update_5</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE wch_addStoreQst add column ACVT_ID VARCHAR(30) DEFAULT NULL;</string>
+	</dict>
+	<key>update_4</key>
+	<dict>
+		<key>sql_1</key>
+		<string>CREATE TABLE IF NOT EXISTS ws_download_file (ID INTEGER  PRIMARY KEY AUTOINCREMENT DEFAULT NULL, empid Varchar(10) DEFAULT NULL, biz_date Varchar(20) DEFAULT NULL,acvt_id Varchar(20) DEFAULT NULL, file_id VARCHAR(32) NOT NULL,file_name VARCHAR(1024) NULL,file_url TEXT NULL,file_length NUMBER NULL,file_download_size NUMBER NULL ,file_type VARCHAR(45) NULL,file_save_path VARCHAR(1024) NULL,file_download_status VARCHAR(45) NULL,file_download_begin_time DATETIME NULL,file_download_end_time DATETIME NULL,file_expire_time DATETIME NULL)</string>
+	</dict>
+	<key>update_3</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE wch_addStoreQst RENAME TO temp_wch_addStoreQst;</string>
+		<key>sql_2</key>
+		<string>CREATE TABLE IF NOT EXISTS wch_addStoreQst(ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, ANS_ID VARCHAR(32), QST_ID VARCHAR(10), OPT_ID VARCHAR(10), OPT_VAL VARCHAR(200), QST_TYPE VARCHAR(1), TITLETYPE VARCHAR(30),newStoreId  VARCHAR(30), FOREIGN KEY(ANS_ID) REFERENCES wch_addStore(ID) ON DELETE CASCADE ON UPDATE CASCADE);</string>
+		<key>sql_3</key>
+		<string>INSERT INTO wch_addStoreQst SELECT ID,ANS_ID,QST_ID,OPT_ID,OPT_VAL,QST_TYPE,&apos;&apos;,&apos;&apos; FROM temp_wch_addStoreQst;</string>
+		<key>sql_4</key>
+		<string>DROP TABLE temp_wch_addStoreQst;</string>
+	</dict>
+	<key>update_2</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE visit_store_action add column module_fc VARCHAR(30) DEFAULT NULL;</string>
+		<key>sql_2</key>
+		<string>ALTER TABLE wch_inoutStore add column VISIT_ID VARCHAR(100) DEFAULT NULL;</string>
+		<key>sql_3</key>
+		<string>ALTER TABLE wch_inoutStore add column modulefc VARCHAR(100) DEFAULT NULL;</string>
+	</dict>
+	<key>update_1</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE wch_addStore RENAME TO temp_wch_addStore</string>
+		<key>sql_2</key>
+		<string>CREATE TABLE IF NOT EXISTS wch_addStore(ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,SR_ID VARCHAR(10),ACVT_ID VARCHAR(10),EMP_ID VARCHAR(10),RSPN_ID VARCHAR(10),STORE_ID VARCHAR(10),BIZ_DATE VARCHAR(10),UPLOAD_FLAG VARCHAR(10),UPLOAD_DATE VARCHAR(10),IMG_IDX VARCHAR(100),FUNC_CODE VARCHAR(50),FUNC_VIEW VARCHAR(50),IS_PLANED VARCHAR(50),MEMO VARCHAR(200),UPDATE_MD5ID VARCHAR(100),STORE_TYPE VARCHAR(50),STORE_NAME VARCHAR(50),ADD_TYPE VARCHAR(50));</string>
+		<key>sql_3</key>
+		<string>INSERT INTO wch_addStore SELECT ID,SR_ID,ACVT_ID,EMP_ID,RSPN_ID,STORE_ID,BIZ_DATE,UPLOAD_FLAG,UPLOAD_DATE,IMG_IDX,FUNC_CODE,FUNC_VIEW,IS_PLANED,MEMO, UPDATE_MD5ID, STORE_TYPE, STORE_NAME,&apos;&apos; FROM temp_wch_addStore
+</string>
+		<key>sql_4</key>
+		<string>DROP TABLE temp_wch_addStore</string>
+	</dict>
+	<key>update_7</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE wch_fac add column p_gen_id VARCHAR(32) DEFAULT NULL;</string>
+	</dict>
+	<key>update_8</key>
+	<dict>
+		<key>sql_1</key>
+		<string>CREATE TABLE IF NOT EXISTS ws_base_store_table (ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,store_Id Varchar(10) NOT NULL,empId Varchar(10),name Varchar(50),code Varchar(10),styp Varchar(10),addr Varchar(50),lon Varchar(50),lat Varchar(50),seq Varchar(10),search_objId Varchar(10),search_code Varchar(10),lvlcode Varchar(10),dist_rule_id Varchar(10),is_plan Varchar(10),sv Varchar(10),visit_status Varchar(10),biz_date Varchar(20),addstore_json_data Varchar(200),store_other_col Varchar(10),pid Varchar(10),acvt_genId Varchar(100),detail_info Varchar(200),beacon_mac Varchar(50),beacon_uuid Varchar(50));</string>
+		<key>sql_2</key>
+		<string>CREATE TABLE IF NOT EXISTS ws_base_store_visitplan (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,emp_id Varchar(10),store_id Varchar(10),biz_date Varchar(20));</string>
+	</dict>
+	<key>update_9</key>
+	<dict>
+		<key>sql_1</key>
+		<string>CREATE TABLE base_acvt (_id INTEGER PRIMARY KEY NOT NULL,acvtName TEXT,acvtObj TEXT,typ TEXT,s TEXT, seq INTEGER, isblock TEXT, originalAcvtId TEXT, isReq TEXT, ispreview TEXT, ftext TEXT, acvtCode TEXT, organization TEXT, publisher TEXT)</string>
+		<key>sql_2</key>
+		<string>CREATE TABLE base_acvt_qst (_id INTEGER,is_req TEXT,readonly TEXT,acvtId TEXT,qstId TEXT,qstName TEXT,qstDesc TEXT,qsttype TEXT,mlen TEXT,dlen TEXT,mnum TEXT,snum TEXT, seq INTEGER, acvtQstId TEXT, qstCod TEXT, ds TEXT, filter TEXT, parent TEXT, color TEXT, groupName TEXT, mc TEXT, isDefaultClick TEXT, isAcvtName TEXT, defaultValue TEXT, acvtNestedId TEXT, func TEXT, alertTitle TEXT, parentQstId TEXT, orientation TEXT, ishidden TEXT, Js TEXT, countrule TEXT, isallowadd TEXT, hint TEXT, charNum TEXT, redis TEXT, Value TEXT, isMutex TEXT, dependon TEXT, REG TEXT, tip TEXT, buttonname TEXT, align TEXT, is_not_water_mark TEXT,  constraint pk_t2 primary key (_id,acvtId))</string>
+		<key>sql_3</key>
+		<string>CREATE TABLE base_acvt_qst_opt (_id INTEGER PRIMARY KEY NOT NULL,acvtQstId TEXT,optName TEXT,optPic TEXT, seq INTEGER, FOREIGN KEY(acvtQstId) REFERENCES base_acvt_qst(_id) ON DELETE CASCADE)</string>
+		<key>sql_4</key>
+		<string>CREATE TABLE base_dicts (_id INTEGER PRIMARY KEY NOT NULL,pid INTEGER,name TEXT,typ TEXT,dtyp TEXT,btyp TEXT, col1 TEXT, col2 TEXT, cod TEXT, dicts_sequence INTEGER, levelCode TEXT, regex TEXT, server_node TEXT)</string>
+		<key>sql_5</key>
+		<string>CREATE TABLE base_emp (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,pid INTEGER,emp_id INTEGER,name TEXT,biz_date TEXT,emp_type TEXT,login_emp_id INTEGER)</string>
+		<key>sql_6</key>
+		<string>CREATE TABLE base_funcs (_id TEXT PRIMARY KEY NOT NULL,parentId TEXT,userId TEXT,fc TEXT,fv TEXT,name TEXT,required TEXT,typ TEXT,opt TEXT,ds TEXT,filter TEXT,wfcol INTEGER,param TEXT,other TEXT,dateTyp TEXT,styp TEXT,isAcvtList TEXT,readonly TEXT,lockCol TEXT,sort INTEGER,levelCode INTEGER, submenu TEXT, unredo TEXT, storeinfo TEXT, defaultinfo TEXT, redis TEXT, sqlw TEXT, datasource TEXT, maxRow TEXT, buttonName TEXT, sql TEXT, tabparam TEXT, Value TEXT, FcharNum TEXT, icon TEXT, nullvalue TEXT, subCode TEXT, android TEXT, script TEXT, hiddenEmpty TEXT)</string>
+		<key>sql_7</key>
+		<string>CREATE TABLE base_in_store_prod (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,store_id INTEGER,prod_id INTEGER,dist TEXT,pri TEXT,inv TEXT,disp TEXT,sdisp TEXT,cmpt TEXT,oos TEXT,mtd TEXT,ord TEXT,gofa TEXT,aging TEXT,otherdicts TEXT,item1 TEXT,item2 TEXT,item3 TEXT,item4 TEXT,item5 TEXT,item6 TEXT,item7 TEXT,item8 TEXT,item9 TEXT,item10 TEXT,item11 TEXT,item12 TEXT,item13 TEXT,item14 TEXT,item15 TEXT,item16 TEXT,item17 TEXT,item18 TEXT,item19 TEXT,item20 TEXT,item21 TEXT,item22 TEXT,item23 TEXT,item24 TEXT,item25 TEXT,item26 TEXT,item27 TEXT,item28 TEXT,item29 TEXT,item30 TEXT,item31 TEXT,item32 TEXT,item33 TEXT,item34 TEXT,item35 TEXT,item36 TEXT,item37 TEXT,item38 TEXT,item39 TEXT,item40 TEXT,item41 TEXT,item42 TEXT,item43 TEXT,item44 TEXT,item45 TEXT,item46 TEXT,item47 TEXT,item48 TEXT,item49 TEXT,item50 TEXT,dt TEXT,dn TEXT)</string>
+		<key>sql_8</key>
+		<string>CREATE TABLE base_media (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,media_idx TEXT,url TEXT,biz_date TEXT, media_type INTEGER, upload_flag INTEGER , media_key TEXT, media_lon TEXT, media_lat TEXT, media_time TEXT, type TEXT, thumbnail_path TEXT, empId INTEGER)
+</string>
+		<key>sql_9</key>
+		<string>CREATE TABLE base_msg (_id INTEGER PRIMARY KEY NOT NULL,title TEXT,cont TEXT,pubdate TEXT,isread INTEGER,pid INTEGER,url TEXT,video_url TEXT, video_path TEXT, sound_url TEXT, sound_path TEXT, updatetime TEXT, fileurl TEXT, filename TEXT, organization TEXT, publisher TEXT, visit_address TEXT, FOREIGN KEY(pid) REFERENCES base_msg_type(_id) ON DELETE CASCADE)</string>
+		<key>sql_10</key>
+		<string>CREATE TABLE base_msg_reply (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,msg_id INTEGER,reply TEXT,biz_date TEXT , store_id TEXT)</string>
+		<key>sql_11</key>
+		<string>CREATE TABLE base_msg_store (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,store_id TEXT,msg_id TEXT,isread TEXT, empId TEXT)
+</string>
+		<key>sql_12</key>
+		<string>CREATE TABLE base_msg_type (_id INTEGER PRIMARY KEY NOT NULL,name TEXT,cod TEXT,msg_amount INTEGER, msg_sequence TEXT, type TEXT)
+</string>
+		<key>sql_13</key>
+		<string>CREATE TABLE base_notification (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,empId TEXT,title TEXT,content TEXT,typ TEXT,sort TEXT,group_id TEXT,state TEXT,biz_date TEXT)</string>
+		<key>sql_14</key>
+		<string>CREATE TABLE base_product (_id INTEGER PRIMARY KEY NOT NULL,name TEXT,cod TEXT,searchcod TEXT,pTyp TEXT,brand TEXT,barcode TEXT,price TEXT, url TEXT, seq INTEGER, addproduct_json_data TEXT, blockPrice TEXT, regex TEXT, pack TEXT, size TEXT, series TEXT, serverCode TEXT)
+</string>
+		<key>sql_15</key>
+		<string>CREATE TABLE base_product_validate (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,prodId INTEGER,groups TEXT,type TEXT,fenzhi TEXT,tip TEXT,memo TEXT,serverNode TEXT)
+</string>
+		<key>sql_16</key>
+		<string>CREATE TABLE base_sms_data (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,emp_id INTEGER,biz_date TEXT,send_num TEXT,receiver_num TEXT,content TEXT,send_time TEXT,result_time TEXT,result_code TEXT,genId TEXT,memo TEXT)
+</string>
+		<key>sql_17</key>
+		<string>CREATE TABLE base_store_acvt (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,sid INTEGER,acvtId INTEGER, uploadCount TEXT, hasUploadedCount TEXT)
+</string>
+		<key>sql_18</key>
+		<string>CREATE TABLE base_store_acvt_dis (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,sid INTEGER,acvtId INTEGER,acvtQstId INTEGER,acvt_qst_answer TEXT, gen_id TEXT, assetId TEXT, opt_value TEXT, is_search TEXT, newStoreId TEXT, server_node TEXT, emp_id TEXT, getTime TEXT)
+</string>
+		<key>sql_19</key>
+		<string>CREATE TABLE base_store_dict_dis (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,emp_id INTEGER,store_id INTEGER,func_code TEXT,dict_id INTEGER,col1 TEXT,col2 TEXT,col3 TEXT,col4 TEXT,col5 TEXT,col6 TEXT,col7 TEXT,col8 TEXT,col9 TEXT,col10 TEXT, assetId TEXT)
+</string>
+		<key>sql_20</key>
+		<string>CREATE TABLE base_store_other_data (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,emp_id INTEGER,store_id INTEGER,type TEXT,item1 TEXT,item2 TEXT,item3 TEXT,item4 TEXT,item5 TEXT,item6 TEXT,item7 TEXT,item8 TEXT,item9 TEXT,item10 TEXT, biz_date TEXT, item11 TEXT, item12 TEXT, item13 TEXT, item14 TEXT, item15 TEXT, item16 TEXT, item17 TEXT, item18 TEXT, item19 TEXT, item20 TEXT)
+</string>
+		<key>sql_21</key>
+		<string>CREATE TABLE base_store_prod_dis (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,store_id INTEGER,prod_id INTEGER,dist TEXT,pri TEXT,inv TEXT,disp TEXT,sdisp TEXT,cmpt TEXT,oos TEXT,mtd TEXT,ord TEXT,gofa TEXT,aging TEXT,otherdicts TEXT,item1 TEXT,item2 TEXT,item3 TEXT,item4 TEXT,item5 TEXT,item6 TEXT,item7 TEXT,item8 TEXT,item9 TEXT,item10 TEXT,item11 TEXT,item12 TEXT,item13 TEXT,item14 TEXT,item15 TEXT,item16 TEXT,item17 TEXT,item18 TEXT,item19 TEXT,item20 TEXT,item21 TEXT,item22 TEXT,item23 TEXT,item24 TEXT,item25 TEXT,item26 TEXT,item27 TEXT,item28 TEXT,item29 TEXT,item30 TEXT,item31 TEXT,item32 TEXT,item33 TEXT,item34 TEXT,item35 TEXT,item36 TEXT,item37 TEXT,item38 TEXT,item39 TEXT,item40 TEXT,item41 TEXT,item42 TEXT,item43 TEXT,item44 TEXT,item45 TEXT,item46 TEXT,item47 TEXT,item48 TEXT,item49 TEXT,item50 TEXT,dt TEXT,dn TEXT, funccode TEXT, genid TEXT)
+</string>
+		<key>sql_22</key>
+		<string>CREATE TABLE base_subemp_store (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,emp_id INTEGER,id TEXT,name TEXT, type TEXT, level_code INTEGER, parentId TEXT, leaf_node TEXT)
+</string>
+		<key>sql_23</key>
+		<string>CREATE TABLE bd_location_data (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,emp_id INTEGER,loc_biz_date TEXT,type TEXT,lon TEXT,lat TEXT,loc_type TEXT,loc_time TEXT,loc_acc TEXT,loc_addr TEXT,loc_city TEXT,loc_date_time TEXT,item1 TEXT,item2 TEXT,item3 TEXT,item4 TEXT,item5 TEXT, enable_gps TEXT, enable_wifi TEXT, enable_mobile TEXT, cache_duration TEXT, net_type TEXT)
+</string>
+		<key>sql_24</key>
+		<string>CREATE TABLE config_param (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,prop_key TEXT,prop_value TEXT)
+</string>
+		<key>sql_25</key>
+		<string>CREATE TABLE upload_json_data (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,content TEXT,upload_url TEXT,upload_flag INTEGER, gen_id TEXT, biz_date TEXT, empId INTEGER, encrypt_flag TEXT)
+</string>
+		<key>sql_26</key>
+		<string>CREATE TABLE visit_dicts (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,emp_id INTEGER,store_id INTEGER,biz_date TEXT,func_code TEXT,func_view TEXT,sr_id INTEGER,is_plan INTEGER,image_idx TEXT,upload_flag INTEGER,gen_id TEXT,memo TEXT,memo1 TEXT,memo2 TEXT,memo3 TEXT,memo4 TEXT,memo5 TEXT,memo6 TEXT,memo7 TEXT,memo8 TEXT,memo9 TEXT,memo10 TEXT )
+</string>
+		<key>sql_27</key>
+		<string>CREATE TABLE visit_dicts_item (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,main_id INTEGER,dict_id INTEGER,col1 TEXT,col2 TEXT,col3 TEXT,col4 TEXT,col5 TEXT,col6 TEXT,col7 TEXT,col8 TEXT,col9 TEXT,col10 TEXT, otherdicts TEXT)
+</string>
+		<key>sql_28</key>
+		<string>CREATE TABLE visit_dist_rule (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,emp_id INTEGER,store_id INTEGER,biz_date TEXT,func_code TEXT,func_view TEXT,sr_id INTEGER,is_plan INTEGER,image_idx TEXT,upload_flag INTEGER,memo TEXT,memo1 TEXT,memo2 TEXT,memo3 TEXT,memo4 TEXT,memo5 TEXT,memo6 TEXT,memo7 TEXT,memo8 TEXT,memo9 TEXT,memo10 TEXT , gen_id TEXT, save_time TEXT, memo11 TEXT, memo12 TEXT, memo13 TEXT, memo14 TEXT, memo15 TEXT, memo16 TEXT, memo17 TEXT, memo18 TEXT, memo19 TEXT, memo20 TEXT)
+</string>
+		<key>sql_29</key>
+		<string>CREATE TABLE visit_dist_rule_item (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,main_id INTEGER,prod_id INTEGER,dist TEXT,pri TEXT,inv TEXT,disp TEXT,sdisp TEXT,cmpt TEXT,oos TEXT,mtd TEXT,ord TEXT,gofa TEXT,aging TEXT,otherdicts TEXT,dt TEXT,item1 TEXT,item2 TEXT,item3 TEXT,item4 TEXT,item5 TEXT,item6 TEXT,item7 TEXT,item8 TEXT,item9 TEXT,item10 TEXT,item11 TEXT,item12 TEXT,item13 TEXT,item14 TEXT,item15 TEXT,item16 TEXT,item17 TEXT,item18 TEXT,item19 TEXT,item20 TEXT,item21 TEXT,item22 TEXT,item23 TEXT,item24 TEXT,item25 TEXT,item26 TEXT,item27 TEXT,item28 TEXT,item29 TEXT,item30 TEXT,item31 TEXT,item32 TEXT,item33 TEXT,item34 TEXT,item35 TEXT,item36 TEXT,item37 TEXT,item38 TEXT,item39 TEXT,item40 TEXT,item41 TEXT,item42 TEXT,item43 TEXT,item44 TEXT,item45 TEXT,item46 TEXT,item47 TEXT,item48 TEXT,item49 TEXT,item50 TEXT, FOREIGN KEY(main_id) REFERENCES visit_dist_rule(_id) ON DELETE CASCADE)
+</string>
+		<key>sql_30</key>
+		<string>CREATE TABLE visit_inout_store (_id INTEGER  PRIMARY KEY AUTOINCREMENT NOT NULL,visit_id TEXT,emp_id INTEGER,store_id INTEGER, sr_id INTEGER, biz_date TEXT, is_planed INTEGER, time INTEGER, image_idx TEXT, lon TEXT, lat TEXT, cellid TEXT, func_code TEXT, func_view TEXT, memo TEXT, memo1 TEXT, memo2 TEXT, memo3 TEXT, memo4 TEXT, memo5 TEXT, memo6 TEXT, memo7 TEXT, memo8 TEXT, memo9 TEXT, memo10 TEXT, sv TEXT, upload_flag INTEGER, leave_flag INTEGER , loc_json TEXT, parent_fc TEXT)
+</string>
+		<key>sql_31</key>
+		<string>CREATE TABLE visit_store_acvt (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,store_id TEXT,acvt_id TEXT,biz_date TEXT,emp_id INTEGER,sr_id INTEGER,memo TEXT,gen_id TEXT)
+</string>
+		<key>sql_32</key>
+		<string>CREATE TABLE visit_store_acvt_data (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,sid INTEGER,acvtId INTEGER,acvtQstId TEXT,acvt_qst_answer TEXT,gen_id TEXT,assetId TEXT,emp_id TEXT,biz_date TEXT, opt_value TEXT)
+</string>
+		<key>sql_33</key>
+		<string>CREATE TABLE visit_store_status (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,emp_id INTEGER,store_id INTEGER,status INTEGER,biz_date TEXT,func_code TEXT, is_plan INTEGER)
+</string>
+	</dict>
+	<key>update_10</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE ws_add_newAcvt add column acvt_newStoreId VARCHAR(30) DEFAULT NULL;</string>
+	</dict>
+	<key>update_11</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE ws_add_newAcvt add column islocal VARCHAR(30) DEFAULT NULL;</string>
+	</dict>
+	<key>update_12</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE base_msg add column headRail VARCHAR(30) DEFAULT NULL;</string>
+	</dict>
+	<key>update_13</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE wch_dict add column col10 VARCHAR(10) DEFAULT NULL;</string>
+		<key>sql_2</key>
+		<string>ALTER TABLE wch_dict add column col11 VARCHAR(10) DEFAULT NULL;</string>
+		<key>sql_3</key>
+		<string>ALTER TABLE wch_dict add column col12 VARCHAR(10) DEFAULT NULL;</string>
+	</dict>
+	<key>update_14</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE base_acvt_qst add column memo VARCHAR(10) DEFAULT NULL;</string>
+		<key>sql_2</key>
+		<string>ALTER TABLE base_acvt_qst add column memo1 VARCHAR(10) DEFAULT NULL;</string>
+		<key>sql_3</key>
+		<string>ALTER TABLE base_acvt_qst add column memo2 VARCHAR(10) DEFAULT NULL;</string>
+		<key>sql_4</key>
+		<string>ALTER TABLE base_acvt_qst add column memo3 VARCHAR(10) DEFAULT NULL;</string>
+		<key>sql_5</key>
+		<string>ALTER TABLE base_acvt_qst add column memo4 VARCHAR(10) DEFAULT NULL;</string>
+		<key>sql_6</key>
+		<string>ALTER TABLE base_acvt_qst add column  qstIconUrl VARCHAR(50) DEFAULT NULL;</string>
+		<key>sql_7</key>
+		<string>ALTER TABLE base_acvt_qst add column  checkType VARCHAR(50) DEFAULT NULL;</string>
+		<key>sql_8</key>
+		<string>ALTER TABLE base_acvt_qst add column  tab VARCHAR(50) DEFAULT NULL;</string>
+		<key>sql_9</key>
+		<string>ALTER TABLE base_acvt_qst add column  isSupperLocalPhoto VARCHAR(50) DEFAULT NULL;</string>
+		<key>sql_10</key>
+		<string>ALTER TABLE base_acvt_qst add column  maxPhoto VARCHAR(50) DEFAULT NULL;</string>
+		<key>sql_11</key>
+		<string>ALTER TABLE ws_base_store_table add column  linkman VARCHAR(50) DEFAULT NULL;</string>
+		<key>sql_12</key>
+		<string>ALTER TABLE ws_base_store_table add column  phone VARCHAR(50) DEFAULT NULL;</string>
+	</dict>
+	<key>update_15</key>
+	<dict>
+		<key>sql_1</key>
+		<string>CREATE TABLE IF NOT EXISTS  spe_richMedia  (ID INTEGER  PRIMARY KEY AUTOINCREMENT DEFAULT NULL, cod Varchar(50) DEFAULT NULL, typ Varchar(40) DEFAULT NULL, memo Varchar(100) DEFAULT NULL,  img_url Varchar(200) DEFAULT NULL,h5_url Varchar(200) DEFAULT NULL,seq Varchar(50) DEFAULT NULL, levelCode Varchar(20) DEFAULT NULL, h5_add Varchar(200) DEFAULT NULL,img_add Varchar(200) DEFAULT NULL)</string>
+		<key>sql_2</key>
+		<string>CREATE TABLE IF NOT EXISTS  spe_richMedia_template  (ID INTEGER  PRIMARY KEY AUTOINCREMENT DEFAULT NULL, pid Varchar(50) DEFAULT NULL, type Varchar(40)  DEFAULT NULL, name Varchar(100) DEFAULT NULL,  item BLOB  DEFAULT NULL,storeID Varchar(30) DEFAULT NULL,storeName Varchar(50) DEFAULT NULL, visitName Varchar(20) DEFAULT NULL)</string>
+		<key>sql_3</key>
+		<string>ALTER TABLE spe_richMedia add column speid VARCHAR(50) DEFAULT NULL;</string>
+	</dict>
+	<key>update_16</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE wch_inoutStore add column  local_image VARCHAR(50) DEFAULT NULL;</string>
+	</dict>
+	<key>update_17</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE wch_addStore add column store_code VARCHAR(30) DEFAULT NULL;</string>
+	</dict>
+	<key>update_18</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE ws_base_store_table add column  storesFilter VARCHAR(50) DEFAULT NULL;</string>
+		<key>sql_2</key>
+		<string>ALTER TABLE spe_richMedia add column name VARCHAR(30) DEFAULT NULL;</string>
+	</dict>
+	<key>update_19</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE base_product add column memo1 VARCHAR(30) DEFAULT NULL;</string>
+		<key>sql_2</key>
+		<string>ALTER TABLE base_product add column memo2 VARCHAR(30) DEFAULT NULL;</string>
+		<key>sql_3</key>
+		<string>ALTER TABLE base_product add column memo3 VARCHAR(10) DEFAULT NULL;</string>
+		<key>sql_4</key>
+		<string>ALTER TABLE base_product add column memo4 VARCHAR(10) DEFAULT NULL;</string>
+	</dict>
+	<key>update_20</key>
+	<dict>
+		<key>sql_1</key>
+		<string>CREATE TABLE IF NOT EXISTS  suggest_list  (ID INTEGER  PRIMARY KEY AUTOINCREMENT DEFAULT NULL, name Varchar(20) DEFAULT NULL, type Varchar(10)  DEFAULT NULL,  item BLOB  DEFAULT NULL)</string>
+		<key>sql_2</key>
+		<string>ALTER TABLE ws_base_store_table add column  state VARCHAR(30) DEFAULT NULL;</string>
+	</dict>
+	<key>update_21</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE spe_richMedia add column  isread VARCHAR(50) DEFAULT NULL;</string>
+		<key>sql_2</key>
+		<string>ALTER TABLE spe_richMedia add column  share_url VARCHAR(50) DEFAULT NULL;</string>
+		<key>sql_3</key>
+		<string>ALTER TABLE spe_richMedia add column type_ VARCHAR(50) DEFAULT NULL;</string>
+		<key>sql_4</key>
+		<string>ALTER TABLE spe_richMedia_template add column sid VARCHAR(50) DEFAULT NULL;</string>
+		<key>sql_5</key>
+		<string>ALTER TABLE spe_richMedia add column fenleiId VARCHAR(50) DEFAULT NULL;</string>
+	</dict>
+	<key>update_22</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE base_acvt_qst add column  hideQstName VARCHAR(50) DEFAULT NULL;</string>
+		<key>sql_2</key>
+		<string>ALTER TABLE base_acvt_qst add column  hideQstOptName VARCHAR(50) DEFAULT NULL;</string>
+	</dict>
+	<key>update_23</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE suggest_list add column  sid VARCHAR(10) DEFAULT NULL;</string>
+	</dict>
+	<key>update_24</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE spe_richMedia add column  clicktime VARCHAR(50) DEFAULT NULL;</string>
+	</dict>
+	<key>update_25</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE base_acvt_qst_opt RENAME TO temp_base_acvt_qst_opt;</string>
+		<key>sql_2</key>
+		<string>CREATE TABLE IF NOT EXISTS base_acvt_qst_opt (_id INTEGER NOT NULL,acvtQstId TEXT,optName TEXT,optPic TEXT, seq INTEGER, PRIMARY KEY(_id,acvtQstId), FOREIGN KEY(acvtQstId) REFERENCES base_acvt_qst(_id) ON DELETE CASCADE);</string>
+		<key>sql_3</key>
+		<string>INSERT INTO base_acvt_qst_opt SELECT _id,acvtQstId,optName,optPic,seq FROM temp_base_acvt_qst_opt;</string>
+		<key>sql_4</key>
+		<string>DROP TABLE temp_base_acvt_qst_opt;</string>
+	</dict>
+	<key>update_26</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE base_dicts add column  SEQ VARCHAR(20) DEFAULT NULL;</string>
+	</dict>
+	<key>update_27</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE base_acvt add column  server_node VARCHAR(20) DEFAULT NULL;</string>
+		<key>sql_2</key>
+		<string>ALTER TABLE base_acvt_qst add column  server_node VARCHAR(20) DEFAULT NULL;</string>
+		<key>sql_3</key>
+		<string>ALTER TABLE base_acvt_qst_opt add column  server_node VARCHAR(20) DEFAULT NULL;</string>
+	</dict>
+	<key>update_28</key>
+	<dict>
+		<key>sql_1</key>
+		<string>DROP TABLE IF EXISTS base_acvt;</string>
+		<key>sql_2</key>
+		<string>DROP TABLE IF EXISTS base_acvt_qst;</string>
+		<key>sql_3</key>
+		<string>DROP TABLE IF EXISTS base_acvt_qst_opt;</string>
+		<key>sql_4</key>
+		<string>CREATE TABLE base_acvt (_id TEXT PRIMARY KEY NOT NULL,acvtName TEXT,acvtObj TEXT,typ TEXT,s TEXT, seq INTEGER, isblock TEXT, originalAcvtId TEXT, isReq TEXT, ispreview TEXT, ftext TEXT, acvtCode TEXT, organization TEXT, publisher TEXT, server_node TEXT)</string>
+		<key>sql_5</key>
+		<string>CREATE TABLE base_acvt_qst (_id TEXT,is_req TEXT,readonly TEXT,acvtId TEXT,qstId TEXT,qstName TEXT,qstDesc TEXT,qsttype TEXT,mlen TEXT,dlen TEXT,mnum TEXT,snum TEXT, seq INTEGER, acvtQstId TEXT, qstCod TEXT, ds TEXT, filter TEXT, parent TEXT, color TEXT, groupName TEXT, mc TEXT, isDefaultClick TEXT, isAcvtName TEXT, defaultValue TEXT, acvtNestedId TEXT, func TEXT, alertTitle TEXT, parentQstId TEXT, orientation TEXT, ishidden TEXT, Js TEXT, countrule TEXT, isallowadd TEXT, hint TEXT, charNum TEXT, redis TEXT, Value TEXT, isMutex TEXT, dependon TEXT, REG TEXT, tip TEXT, buttonname TEXT, align TEXT, is_not_water_mark TEXT, memo TEXT, memo1 TEXT, memo2 TEXT, memo3 TEXT, memo4 TEXT, qstIconUrl TEXT, checkType TEXT, tab TEXT, isSupperLocalPhoto TEXT, maxPhoto TEXT, hideQstName TEXT, hideQstOptName TEXT, server_node TEXT, constraint pk_t2 primary key (_id,acvtId))</string>
+		<key>sql_6</key>
+		<string>CREATE TABLE base_acvt_qst_opt (_id TEXT NOT NULL,acvtQstId TEXT,optName TEXT,optPic TEXT, seq INTEGER, server_node TEXT, PRIMARY KEY(_id,acvtQstId), FOREIGN KEY(acvtQstId) REFERENCES base_acvt_qst(_id) ON DELETE CASCADE);</string>
+	</dict>
+	<key>update_29</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE base_dicts add fl VARCHAR(30) DEFAULT NULL;</string>
+	</dict>
+	<key>update_30</key>
+	<dict>
+		<key>sql_1</key>
+		<string>DROP TABLE IF EXISTS base_dicts;</string>
+		<key>sql_2</key>
+		<string>CREATE TABLE base_dicts (_id TEXT PRIMARY KEY NOT NULL,pid INTEGER,name TEXT,typ TEXT,dtyp TEXT,btyp TEXT, col1 TEXT, col2 TEXT, cod TEXT, dicts_sequence INTEGER, levelCode TEXT, regex TEXT, server_node TEXT, SEQ TEXT, fl TEXT)</string>
+	</dict>
+	<key>update_31</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE base_acvt_qst add bgColor VARCHAR(10);</string>
+	</dict>
+	<key>update_32</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE suggest_list add column empid VARCHAR(50) DEFAULT NULL;</string>
+		<key>sql_2</key>
+		<string>ALTER TABLE suggest_list add column biz_date VARCHAR(50) DEFAULT NULL;</string>
+	</dict>
+	<key>update_33</key>
+	<dict>
+		<key>sql_1</key>
+		<string>create index idx_act_id on base_store_acvt_dis(acvtId,acvtQstId);</string>
+	</dict>
+	<key>update_34</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE base_acvt_qst add displayMode VARCHAR(50);</string>
+	</dict>
+	<key>update_35</key>
+	<dict>
+		<key>sql_1</key>
+		<string>DROP TABLE IF EXISTS visit_dist_rule;</string>
+		<key>sql_2</key>
+		<string>DROP TABLE IF EXISTS visit_dist_rule_item;</string>
+		<key>sql_3</key>
+		<string>CREATE VIEW visit_dist_rule AS SELECT  IMG_IDX _id,emp_id,store_id,biz_date,func_code,func_view,sr_id,is_planed is_plan,img_idx image_idx ,upload_flag,memo,memo1,memo2,memo3,memo4,memo5,memo6,memo7 FROM wch_fpt  </string>
+		<key>sql_4</key>
+		<string>CREATE VIEW visit_dist_rule_item AS SELECT  id _id, idx main_id,prod_id,dist,pri,inv,disp,sdisp,cmpt,oos,mtd,ord,gofa,aging,otherdicts,
+            item1,item2,item3,item4,item5,item6,item7,item8,item9,item10,
+            item11,item12,item13,item14,item15,item16,item17,item18,item19,item20,
+            item21,item22,item23,item24,item25,item26,item27,item28,item29,item30,
+            item31,item32,item33,item34,item35,item36,item37,item38,item39,item40,
+            item41,item42,item43,item44,item45,item46,item47,item48,item49,item50 FROM wch_product</string>
+	</dict>
+	<key>update_36</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE ws_base_store_table add column  last_man VARCHAR(50) DEFAULT NULL;</string>
+		<key>sql_2</key>
+		<string>ALTER TABLE ws_base_store_table add column  last_date VARCHAR(50) DEFAULT NULL;</string>
+		<key>sql_3</key>
+		<string>ALTER TABLE ws_base_store_table add column  distances VARCHAR(50) DEFAULT NULL;</string>
+		<key>sql_4</key>
+		<string>ALTER TABLE ws_base_store_table add column  row_number VARCHAR(50) DEFAULT NULL;</string>
+	</dict>
+	<key>update_37</key>
+	<dict>
+		<key>sql_1</key>
+		<string>CREATE TABLE IF NOT EXISTS  spe_richMedia_otherinfo  (ID INTEGER  PRIMARY KEY AUTOINCREMENT DEFAULT NULL, sid Varchar(50) DEFAULT NULL, speid Varchar(40)  DEFAULT NULL, click_time Varchar(100) DEFAULT NULL, biz_date Varchar(20) DEFAULT NULL, emp_id Varchar(20) DEFAULT NULL);</string>
+	</dict>
+	<key>update_38</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE base_acvt_qst add hiddenBottomline  VARCHAR(30) DEFAULT NULL;</string>
+	</dict>
+	<key>update_39</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE base_store_acvt  add column  server_node VARCHAR(50) DEFAULT NULL;</string>
+	</dict>
+	<key>update_40</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE visit_store_acvt_data add column newStoreId VARCHAR(30) DEFAULT NULL;</string>
+		<key>sql_2</key>
+		<string>ALTER TABLE visit_store_action add column newstore_id VARCHAR(30) DEFAULT NULL;</string>
+	</dict>
+	<key>update_41</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE base_funcs add column menuType VARCHAR(50) DEFAULT NULL;</string>
+		<key>sql_2</key>
+		<string>ALTER TABLE base_funcs add column menuStyle VARCHAR(50) DEFAULT NULL;</string>
+	</dict>
+	<key>update_42</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE ws_base_store_visitplan add column seq VARCHAR(10) DEFAULT NULL;</string>
+	</dict>
+	<key>update_43</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE base_acvt_qst add column widthPercent VARCHAR(10) DEFAULT NULL;</string>
+	</dict>
+	<key>update_44</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE base_acvt  add column acvtIconUrl VARCHAR(100) DEFAULT NULL;</string>
+	</dict>
+	<key>update_45</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE base_acvt_qst add column isCoverNewId VARCHAR(10) DEFAULT NULL;</string>
+	</dict>
+	<key>update_46</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE visit_store_acvt_data add column mClickTime VARCHAR(10) DEFAULT NULL;</string>
+	</dict>
+	<key>update_47</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE base_store_dict_dis add column server_node VARCHAR(50) DEFAULT NULL;</string>
+	</dict>
+	<key>update_48</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE wch_visitStorePlan add column storeid  VARCHAR(10) DEFAULT NULL;</string>
+		<key>sql_2</key>
+		<string>ALTER TABLE wch_visitStorePlan add column storestate  VARCHAR(10) DEFAULT NULL;</string>
+		<key>sql_3</key>
+		<string>ALTER TABLE wch_visitStorePlan add column storestateurl  VARCHAR(10) DEFAULT NULL;</string>
+	</dict>
+	<key>update_49</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE ws_base_store_table add column  item_name VARCHAR(50) DEFAULT NULL;</string>
+		<key>sql_2</key>
+		<string>ALTER TABLE ws_base_store_table add column  department_id VARCHAR(50) DEFAULT NULL;</string>
+	</dict>
+	<key>update_50</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE base_acvt add column  luaText VARCHAR(50) DEFAULT NULL;</string>
+		<key>sql_2</key>
+		<string>ALTER TABLE base_acvt_qst add column  isAcvtLua VARCHAR(50) DEFAULT NULL;</string>
+	</dict>
+	<key>update_51</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE base_store_dict_dis add column col11 VARCHAR(50) DEFAULT NULL;</string>
+		<key>sql_2</key>
+		<string>ALTER TABLE base_store_dict_dis add column col12 VARCHAR(50) DEFAULT NULL;</string>
+		<key>sql_3</key>
+		<string>ALTER TABLE base_store_dict_dis add column col13 VARCHAR(50) DEFAULT NULL;</string>
+		<key>sql_4</key>
+		<string>ALTER TABLE base_store_dict_dis add column col14 VARCHAR(50) DEFAULT NULL;</string>
+		<key>sql_5</key>
+		<string>ALTER TABLE base_store_dict_dis add column col15 VARCHAR(50) DEFAULT NULL;</string>
+		<key>sql_6</key>
+		<string>ALTER TABLE base_store_dict_dis add column col16 VARCHAR(50) DEFAULT NULL;</string>
+		<key>sql_7</key>
+		<string>ALTER TABLE base_store_dict_dis add column col17 VARCHAR(50) DEFAULT NULL;</string>
+		<key>sql_8</key>
+		<string>ALTER TABLE base_store_dict_dis add column col18 VARCHAR(50) DEFAULT NULL;</string>
+		<key>sql_9</key>
+		<string>ALTER TABLE base_store_dict_dis add column col19 VARCHAR(50) DEFAULT NULL;</string>
+		<key>sql_10</key>
+		<string>ALTER TABLE base_store_dict_dis add column col20 VARCHAR(50) DEFAULT NULL;</string>
+		<key>sql_11</key>
+		<string>ALTER TABLE base_store_dict_dis add column col21 VARCHAR(50) DEFAULT NULL;</string>
+		<key>sql_12</key>
+		<string>ALTER TABLE base_store_dict_dis add column col22 VARCHAR(50) DEFAULT NULL;</string>
+		<key>sql_13</key>
+		<string>ALTER TABLE base_store_dict_dis add column col23 VARCHAR(50) DEFAULT NULL;</string>
+		<key>sql_14</key>
+		<string>ALTER TABLE base_store_dict_dis add column col24 VARCHAR(50) DEFAULT NULL;</string>
+		<key>sql_15</key>
+		<string>ALTER TABLE base_store_dict_dis add column col25 VARCHAR(50) DEFAULT NULL;</string>
+		<key>sql_16</key>
+		<string>ALTER TABLE base_store_dict_dis add column col26 VARCHAR(50) DEFAULT NULL;</string>
+		<key>sql_17</key>
+		<string>ALTER TABLE base_store_dict_dis add column col27 VARCHAR(50) DEFAULT NULL;</string>
+		<key>sql_18</key>
+		<string>ALTER TABLE base_store_dict_dis add column col28 VARCHAR(50) DEFAULT NULL;</string>
+		<key>sql_19</key>
+		<string>ALTER TABLE base_store_dict_dis add column col29 VARCHAR(50) DEFAULT NULL;</string>
+		<key>sql_20</key>
+		<string>ALTER TABLE base_store_dict_dis add column col30 VARCHAR(50) DEFAULT NULL;</string>
+		<key>sql_21</key>
+		<string>ALTER TABLE base_store_dict_dis add column col31 VARCHAR(50) DEFAULT NULL;</string>
+		<key>sql_22</key>
+		<string>ALTER TABLE base_store_dict_dis add column col32 VARCHAR(50) DEFAULT NULL;</string>
+		<key>sql_23</key>
+		<string>ALTER TABLE base_store_dict_dis add column col33 VARCHAR(50) DEFAULT NULL;</string>
+		<key>sql_24</key>
+		<string>ALTER TABLE base_store_dict_dis add column col34 VARCHAR(50) DEFAULT NULL;</string>
+		<key>sql_25</key>
+		<string>ALTER TABLE base_store_dict_dis add column col35 VARCHAR(50) DEFAULT NULL;</string>
+		<key>sql_26</key>
+		<string>ALTER TABLE base_store_dict_dis add column col36 VARCHAR(50) DEFAULT NULL;</string>
+		<key>sql_27</key>
+		<string>ALTER TABLE base_store_dict_dis add column col37 VARCHAR(50) DEFAULT NULL;</string>
+		<key>sql_28</key>
+		<string>ALTER TABLE base_store_dict_dis add column col38 VARCHAR(50) DEFAULT NULL;</string>
+		<key>sql_29</key>
+		<string>ALTER TABLE base_store_dict_dis add column col39 VARCHAR(50) DEFAULT NULL;</string>
+		<key>sql_30</key>
+		<string>ALTER TABLE base_store_dict_dis add column col40 VARCHAR(50) DEFAULT NULL;</string>
+	</dict>
+	<key>update_52</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE base_store_prod_dis add column server_node VARCHAR(50) DEFAULT NULL;</string>
+	</dict>
+	<key>update_53</key>
+	<dict>
+		<key>sql_1</key>
+		<string>CREATE TABLE user_behavior_statistics (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,userAccount VARCHAR(30),empName VARCHAR(30),bizdate VARCHAR(30),parentFc VARCHAR(30),parentFuncName VARCHAR(30),fc  VARCHAR(30),funcName VARCHAR(30),storeId VARCHAR(30),storeCode VARCHAR(30),storeName VARCHAR(30),sceneId  VARCHAR(30),eventId VARCHAR(30),startTime VARCHAR(30),endTime VARCHAR(30),eventValue VARCHAR(30),genId VARCHAR(30));</string>
+	</dict>
+	<key>update_54</key>
+	<dict>
+		<key>sql_1</key>
+		<string>CREATE TABLE base_store_distrule (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,sid VARCHAR(30),drId VARCHAR(30), server_node VARCHAR(30))</string>
+		<key>sql_2</key>
+		<string>ALTER TABLE base_in_store_prod add column server_node VARCHAR(50) DEFAULT NULL;</string>
+	</dict>
+	<key>update_55</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE base_emp add column  server_node VARCHAR(30) DEFAULT NULL;</string>
+	</dict>
+	<key>update_56</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE base_acvt_qst add column  locationType VARCHAR(30) DEFAULT NULL;</string>
+	</dict>
+	<key>update_57</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE base_msg add column  lastreplycount VARCHAR(30) DEFAULT NULL;</string>
+	</dict>
+	<key>update_58</key>
+	<dict>
+		<key>sql_1</key>
+		<string>CREATE TABLE IF NOT EXISTS bd_location_data (_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,emp_id  INTEGER,loc_biz_date Varchar(30),type Varchar(50),lon VARCHAR(50),lat VARCHAR(50),loc_type VARCHAR(50),loc_time VARCHAR(20),loc_acc Varchar(30),loc_addr Varchar(200),loc_city VARCHAR(50),loc_date_time Varchar(30),item1 TEXT,item2 TEXT,item3 TEXT,item4 TEXT,item5 TEXT,enable_gps VARCHAR(10),enable_wifi VARCHAR(10),enable_mobile VARCHAR(10),cache_duration VARCHAR(30),net_type VARCHAR(30),loc_poiname Varchar(200));</string>
+	</dict>
+	<key>update_59</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE base_product add column  prodtrees VARCHAR(130) DEFAULT NULL;</string>
+	</dict>
+	<key>update_60</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE base_in_store_prod add column  imgtype VARCHAR(130) DEFAULT NULL;</string>
+	</dict>
+	<key>update_61</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE wch_fdt  add column  TITLE VARCHAR(130) DEFAULT NULL;</string>
+	</dict>
+	<key>update_62</key>
+	<dict>
+		<key>sql_1</key>
+		<string>CREATE TABLE base_store_info (_id TEXT PRIMARY KEY NOT NULL,info_type TEXT,col_name TEXT,col_value TEXT,typ TEXT,emp_or_store_id TEXT,group_id TEXT,empId TEXT)</string>
+	</dict>
+	<key>update_63</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE ws_base_store_table add column pinyin VARCHAR(500) DEFAULT NULL;</string>
+	</dict>
+	<key>update_64</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE base_msg add column pinyin VARCHAR(500) DEFAULT NULL;</string>
+		<key>sql_2</key>
+		<string>ALTER TABLE base_product add column pinyin VARCHAR(500) DEFAULT NULL;</string>
+	</dict>
+	<key>update_65</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE base_product add column expirydate VARCHAR(50) DEFAULT NULL;</string>
+		<key>sql_2</key>
+		<string>ALTER TABLE base_product add column bigage VARCHAR(50) DEFAULT NULL;</string>
+	</dict>
+	<key>update_66</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE ws_base_store_table add column follow VARCHAR(500) DEFAULT NULL;</string>
+	</dict>
+	<key>update_67</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE base_acvt_qst add column verticalGroupName VARCHAR(50) DEFAULT NULL;</string>
+		<key>sql_2</key>
+		<string>ALTER TABLE base_acvt_qst add column layout_gravity VARCHAR(20) DEFAULT NULL;</string>
+	</dict>
+	<key>update_68</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE base_dicts add column iconUrl VARCHAR(20) DEFAULT NULL;</string>
+	</dict>
+	<key>update_69</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE base_funcs add column noticeNumFc VARCHAR(50) DEFAULT NULL;</string>
+	</dict>
+	<key>update_70</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE base_product add column memo VARCHAR(50) DEFAULT NULL;</string>
+	</dict>
+	<key>update_71</key>
+	<dict>
+		<key>sql_1</key>
+		<string>DROP VIEW visit_dist_rule;</string>
+		<key>sql_2</key>
+		<string>CREATE VIEW visit_dist_rule AS SELECT  IMG_IDX _id,emp_id,store_id,biz_date,func_code,func_view,sr_id,is_planed is_plan,img_idx image_idx,upload_flag,memo,memo1,memo2,memo3,memo4,memo5,memo6,memo7,memo8,memo9,memo10,TITLE gen_id FROM wch_fpt;</string>
+	</dict>
+	<key>update_72</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE ws_base_store_table add column  cityId VARCHAR(50) DEFAULT NULL;</string>
+	</dict>
+	<key>update_73</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE base_msg add column typcode VARCHAR(100) DEFAULT NULL;</string>
+	</dict>
+	<key>update_74</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE ws_base_store_table add column qrcode VARCHAR(100) DEFAULT NULL;</string>
+	</dict>
+	<key>update_75</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE ws_base_store_table add column ctyp VARCHAR(50) DEFAULT NULL;</string>
+		<key>sql_2</key>
+		<string>ALTER TABLE wch_inoutStore add column needTip VARCHAR(30) DEFAULT NULL;</string>
+	</dict>
+	<key>update_76</key>
+	<dict>
+		<key>sql_1</key>
+		<string>CREATE TABLE base_store_dicts (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,sid INTEGER,dictId INTEGER, empId INTEGER, server_node TEXT)</string>
+		<key>sql_2</key>
+		<string>ALTER TABLE base_acvt_qst add column titleReadColor VARCHAR(50) DEFAULT NULL;</string>
+		<key>sql_3</key>
+		<string>ALTER TABLE base_acvt_qst add column valueReadColor VARCHAR(50) DEFAULT NULL;</string>
+		<key>sql_4</key>
+		<string>ALTER TABLE base_acvt_qst add column valueColor VARCHAR(50) DEFAULT NULL;</string>
+		<key>sql_5</key>
+		<string>ALTER TABLE base_acvt_qst add column titleSize VARCHAR(50) DEFAULT NULL;</string>
+		<key>sql_6</key>
+		<string>ALTER TABLE base_acvt_qst add column valueSize VARCHAR(50) DEFAULT NULL;</string>
+	</dict>
+	<key>update_77</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE base_msg_type add column icon_url VARCHAR(500) DEFAULT NULL;</string>
+	</dict>
+	<key>update_78</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE base_msg add column  seq VARCHAR(30) DEFAULT NULL;</string>
+	</dict>
+	<key>update_79</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE base_msg_type add column  sort VARCHAR(30) DEFAULT NULL;</string>
+	</dict>
+	<key>update_80</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE ws_base_store_table add column custCode VARCHAR(100) DEFAULT NULL;</string>
+	</dict>
+	<key>update_81</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE ws_base_store_table add column orgId VARCHAR(100) DEFAULT NULL;</string>
+	</dict>
+	<key>update_82</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE base_product add column barcode2 VARCHAR(100) DEFAULT NULL;</string>
+	</dict>
+	<key>update_83</key>
+	<dict>
+		<key>sql_1</key>
+		<string>DROP TABLE IF EXISTS base_dicts;</string>
+		<key>sql_2</key>
+		<string>CREATE TABLE base_dicts (_id TEXT PRIMARY KEY NOT NULL,pid TEXT ,name TEXT,typ TEXT,dtyp TEXT,btyp TEXT, col1 TEXT, col2 TEXT, cod TEXT, dicts_sequence INTEGER, levelCode TEXT, regex TEXT, server_node TEXT, SEQ TEXT, fl TEXT ,iconUrl TEXT)</string>
+		<key>sql_3</key>
+		<string>DROP TABLE IF EXISTS base_store_dict_dis;</string>
+		<key>sql_4</key>
+		<string>CREATE TABLE base_store_dict_dis  (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,emp_id INTEGER,store_id INTEGER,func_code TEXT,dict_id TEXT ,col1 TEXT,col2 TEXT,col3 TEXT,col4 TEXT,col5 TEXT,col6 TEXT,col7 TEXT,col8 TEXT,col9 TEXT,col10 TEXT, assetId TEXT ,server_node TEXT,col11 TEXT,col12 TEXT,col13 TEXT,col14 TEXT,col15 TEXT,col16 TEXT,col17 TEXT,col18 TEXT,col19 TEXT,col20 TEXT,col21 TEXT,col22 TEXT,col23 TEXT,col24 TEXT,col25 TEXT,col26 TEXT,col27 TEXT,col28 TEXT,col29 TEXT,col30 TEXT,col31 TEXT,col32 TEXT,col33 TEXT,col34 TEXT,col35 TEXT,col36 TEXT,col37 TEXT,col38 TEXT,col39 TEXT,col40 TEXT)</string>
+		<key>sql_5</key>
+		<string>DROP TABLE IF EXISTS visit_dicts_item;  </string>
+		<key>sql_6</key>
+		<string>CREATE TABLE visit_dicts_item (_id TEXT PRIMARY KEY NOT NULL,main_id INTEGER,dict_id TEXT ,col1 TEXT,col2 TEXT,col3 TEXT,col4 TEXT,col5 TEXT,col6 TEXT,col7 TEXT,col8 TEXT,col9 TEXT,col10 TEXT, otherdicts TEXT)</string>
+		<key>sql_7</key>
+		<string>DROP TABLE IF EXISTS wch_dict;  </string>
+		<key>sql_8</key>
+		<string>CREATE TABLE IF NOT EXISTS wch_dict(ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,idx VARCHAR(100),dict_id TEXT ,col1 VARCHAR(10),col2 VARCHAR(10),col3 VARCHAR(100),col4 VARCHAR(10),col5 VARCHAR(10),col6 VARCHAR(10),col7 VARCHAR(10),col8 VARCHAR(10),col9 VARCHAR(10),col10 VARCHAR(10),col11 VARCHAR(10),col12 VARCHAR(10),FOREIGN KEY(IDX) REFERENCES wch_fdt(IMG_IDX) ON DELETE CASCADE ON UPDATE CASCADE);</string>
+	</dict>
+	<key>update_84</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE base_funcs add column pageTag VARCHAR(100) DEFAULT NULL;</string>
+		<key>sql_2</key>
+		<string>ALTER TABLE base_funcs add column btnTag VARCHAR(100) DEFAULT NULL;</string>
+		<key>sql_3</key>
+		<string>ALTER TABLE base_funcs add column colNum VARCHAR(100) DEFAULT NULL;</string>
+		<key>sql_4</key>
+		<string>ALTER TABLE base_funcs add column topTip VARCHAR(100) DEFAULT NULL;</string>
+		<key>sql_5</key>
+		<string>ALTER TABLE base_funcs add column defaultImageUrl VARCHAR(100) DEFAULT NULL;</string>
+		<key>sql_6</key>
+		<string>ALTER TABLE base_funcs add column iconOfDone VARCHAR(100) DEFAULT NULL;</string>
+		<key>sql_7</key>
+		<string>ALTER TABLE base_acvt add column dateTyp VARCHAR(100) DEFAULT NULL;</string>
+		<key>sql_8</key>
+		<string>ALTER TABLE base_acvt_qst add column confirmPageShow VARCHAR(100) DEFAULT NULL;</string>
+		<key>sql_9</key>
+		<string>ALTER TABLE base_acvt_qst add column dateUnit VARCHAR(100) DEFAULT NULL;</string>
+		<key>sql_10</key>
+		<string>ALTER TABLE base_acvt_qst add column imageUrl VARCHAR(100) DEFAULT NULL;</string>
+		<key>sql_11</key>
+		<string>ALTER TABLE base_acvt_qst add column acvtTabIcon VARCHAR(100) DEFAULT NULL;</string>
+		<key>sql_12</key>
+		<string>ALTER TABLE ws_base_store_table add column t9 VARCHAR(100) DEFAULT NULL;</string>
+		<key>sql_13</key>
+		<string>ALTER TABLE ws_base_store_table add column cl VARCHAR(100) DEFAULT NULL;</string>
+		<key>sql_14</key>
+		<string>ALTER TABLE ws_base_store_table add column cpyCode VARCHAR(100) DEFAULT NULL;</string>
+		<key>sql_15</key>
+		<string>ALTER TABLE ws_base_store_table add column custDf VARCHAR(100) DEFAULT NULL;</string>
+		<key>sql_16</key>
+		<string>ALTER TABLE ws_base_store_table add column locCode VARCHAR(100) DEFAULT NULL;</string>
+		<key>sql_17</key>
+		<string>ALTER TABLE ws_base_store_table add column is_general VARCHAR(100) DEFAULT NULL;</string>
+		<key>sql_18</key>
+		<string>ALTER TABLE ws_base_store_table add column sup VARCHAR(100) DEFAULT NULL;</string>
+		<key>sql_19</key>
+		<string>ALTER TABLE ws_base_store_table add column homeplan VARCHAR(100) DEFAULT NULL;</string>
+		<key>sql_20</key>
+		<string>ALTER TABLE ws_base_store_table add column pstype VARCHAR(100) DEFAULT NULL;</string>
+		<key>sql_21</key>
+		<string>ALTER TABLE ws_base_store_table add column jstype VARCHAR(100) DEFAULT NULL;</string>
+	</dict>
+	<key>update_85</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE base_funcs add column tt9 VARCHAR(100) DEFAULT NULL;</string>
+	</dict>
+	<key>update_86</key>
+	<dict>
+		<key>sql_1</key>
+		<string>ALTER TABLE visit_store_acvt_data add column server_node VARCHAR(100) DEFAULT NULL;</string>
+	</dict>
+    <key>update_87</key>
+    <dict>
+        <key>sql_1</key>
+        <string>ALTER TABLE visit_store_status add column parent_funcode VARCHAR(100) DEFAULT NULL;</string>
+        <key>sql_2</key>
+        <string>ALTER TABLE visit_store_status add column from_module VARCHAR(100) DEFAULT NULL;</string>
+        <key>sql_3</key>
+        <string>ALTER TABLE base_store_dicts add column memo VARCHAR(100) DEFAULT NULL;</string>
+        <key>sql_4</key>
+        <string>ALTER TABLE visit_store_action add column fromModuleName VARCHAR(100) DEFAULT NULL;</string>
+
+    </dict>
+
+</dict>
+</plist>

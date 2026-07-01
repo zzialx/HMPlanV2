@@ -1,0 +1,13 @@
+//
+//  WSAcvtListDataItem.m
+//  WinSFA
+//
+//  Created by yang on 16/11/2.
+//  Copyright © 2016年 WinChannel. All rights reserved.
+//
+
+#import "WSAcvtListDataItem.h"
+
+@implementation WSAcvtListDataItem
+
+@end

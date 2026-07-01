@@ -1,0 +1,22 @@
+/*
+  InfoPlist.strings
+  WinSFA
+
+  Created by yang on 14-9-23.
+  Copyright (c) 2014年 WinChannel. All rights reserved.
+*/
+
+CFBundleDisplayName = "零售 New SFA";
+NSBluetoothAlwaysUsageDescription = "App需要获取蓝牙授权，以满足对打印销售小票的日常工作需要，是否允许此App使用蓝牙功能？";
+NSBluetoothPeripheralUsageDescription = "App需要获取蓝牙授权，以满足对打印销售小票的日常工作需要，是否允许此App使用蓝牙功能？";
+NSLocationAlwaysAndWhenInUseUsageDescription = "App需要获取定位授权，以满足对拜访门店/离开门店/考勤打卡的日常工作需要，是否允许此App使用定位功能？";
+NSLocationAlwaysUsageDescription = "App需要获取定位授权，以满足对拜访门店/离开门店/考勤打卡的日常工作需要，是否允许此App使用定位功能？";
+NSLocationUsageDescription = "App需要获取定位授权，以满足对拜访门店/离开门店/考勤打卡的日常工作需要，是否允许此App使用定位功能？";
+NSLocationWhenInUseUsageDescription = "App需要获取定位授权，以满足对拜访门店/离开门店/考勤打卡的日常工作需要，是否允许此App使用定位功能？";
+NSPhotoLibraryUsageDescription = "App需要获取相册授权，以满足对选取门头照/货物照/凭证照/保存工作照片的日常工作需要，是否允许此App使用相册功能？";
+NSPhotoLibraryAddUsageDescription = "App需要获取相册授权，以满足对选取门头照/货物照/凭证照/保存工作照片的日常工作需要，是否允许此App使用相册功能？";
+NSCalendarsUsageDescription = "App需要获取日历授权，以满足对安排工作计划以及计划提醒的日常工作需要，是否允许此App使用日历功能？";
+NSCameraUsageDescription = "App需要获取相机授权，以满足对进门店拍照/考勤识别人脸以及对货架识别拍照的日常工作需要，是否允许此App使用相机功能？";
+NSContactsUsageDescription = "App需要获取通讯录授权，以满足对同事/客户间快速联系的日常工作需要，是否允许此App使用通讯录功能？";
+NSMicrophoneUsageDescription = "App需要获取语音授权，以满足同事/客户间的快速沟通日常工作需要，是否允许此App使用语音功能？";
+

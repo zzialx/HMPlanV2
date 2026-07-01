@@ -1,0 +1,294 @@
+;(function() {
+	if (window.winc_interface_widget) { return }
+	var messagingIframe
+	var sendMessageQueue = []
+	var receiveMessageQueue = []
+	var messageHandlers = {}
+	
+	var CUSTOM_PROTOCOL_SCHEME = 'wvjbscheme'
+	var QUEUE_HAS_MESSAGE = '__WVJB_QUEUE_MESSAGE__'
+	
+	var responseCallbacks = {}
+	var uniqueId = 1
+	
+	function _createQueueReadyIframe(doc) {
+		messagingIframe = doc.createElement('iframe')
+		messagingIframe.style.display = 'none'
+		messagingIframe.src = CUSTOM_PROTOCOL_SCHEME + '://' + QUEUE_HAS_MESSAGE
+		doc.documentElement.appendChild(messagingIframe)
+	}
+
+	function init(messageHandler) {
+		if (winc_interface_widget._messageHandler) { throw new Error('winc_interface_widget.init called twice') }
+		winc_interface_widget._messageHandler = messageHandler
+		var receivedMessages = receiveMessageQueue
+		receiveMessageQueue = null
+		for (var i=0; i<receivedMessages.length; i++) {
+			_dispatchMessageFromObjC(receivedMessages[i])
+		}
+	}
+
+	function send(data, responseCallback) {
+		_doSend({ data:data }, responseCallback)
+	}
+	
+	function registerHandler(handlerName, handler) {
+		messageHandlers[handlerName] = handler
+	}
+	
+	function callHandler(handlerName, data, responseCallback) {
+		_doSend({ handlerName:handlerName, data:data }, responseCallback)
+	}
+    function clickOnAndroid(data){
+    var handlerName = 'clickOnAndroid';
+    callHandler(handlerName ,data)
+    }
+    //自定义接口
+    function scanBarcode(data){
+        var handlerName = 'scanBarcode';
+        callHandler(handlerName ,data)
+    }
+
+    function finish(data){
+        var handlerName = 'finish';
+        callHandler(handlerName ,data)
+    }
+    
+    function toLoginPage(data){
+        var handlerName = 'toLoginPage';
+        callHandler(handlerName ,data)
+    }
+
+    function downFile(data){
+        var handlerName = 'downFile';
+        callHandler(handlerName ,data)
+    }
+
+    function softkeyboardChange(data){
+        var handlerName = 'softkeyboardChange';
+        callHandler(handlerName ,data)
+    }
+
+    function registBackListen(data){
+        var handlerName = 'registBackListen';
+        callHandler(handlerName ,data)
+    }
+
+    function onResize(data){
+        var handlerName = 'onResize';
+        callHandler(handlerName ,data)
+    }
+
+    function removeFuncMarker(data){
+        var handlerName = 'removeFuncMarker';
+        callHandler(handlerName, data)
+    }
+
+    function shareTextToWeChat(data){
+         var handlerName = 'shareTextToWeChat';
+         callHandler(handlerName, data)
+    }
+
+
+    function functip(data){
+        var handlerName = 'functip';
+        callHandler(handlerName, data)
+    }
+    function addAcvt(data){
+        var handlerName = 'addAcvt';
+        callHandler(handlerName, data)
+    }
+
+    function updateStoreInfoDatas(data){
+        var handlerName = 'updateStoreInfoDatas';
+        callHandler(handlerName ,data)
+    }
+
+    function addNewStore(data){
+    var handlerName = 'addNewStore';
+    callHandler(handlerName ,data)
+    }
+
+    function needUpdateStoreList(data){
+    var handlerName = 'needUpdateStoreList';
+    callHandler(handlerName ,data)
+    }
+    function goHome(data){
+    var handlerName = 'goHome';
+    callHandler(handlerName ,data)
+    }
+
+	function _doSend(message, responseCallback) {
+		if (responseCallback) {
+			var callbackId = 'cb_'+(uniqueId++)+'_'+new Date().getTime()
+			responseCallbacks[callbackId] = responseCallback
+			message['callbackId'] = callbackId
+		}
+		sendMessageQueue.push(message)
+		messagingIframe.src = CUSTOM_PROTOCOL_SCHEME + '://' + QUEUE_HAS_MESSAGE
+	}
+
+	function _fetchQueue() {
+		var messageQueueString = JSON.stringify(sendMessageQueue)
+		sendMessageQueue = []
+		return messageQueueString
+	}
+
+	function _dispatchMessageFromObjC(messageJSON) {
+		setTimeout(function _timeoutDispatchMessageFromObjC() {
+			var message = JSON.parse(messageJSON)
+			var messageHandler
+			var responseCallback
+
+			if (message.responseId) {
+				responseCallback = responseCallbacks[message.responseId]
+				if (!responseCallback) { return; }
+				responseCallback(message.responseData)
+				delete responseCallbacks[message.responseId]
+			} else {
+				if (message.callbackId) {
+					var callbackResponseId = message.callbackId
+					responseCallback = function(responseData) {
+						_doSend({ responseId:callbackResponseId, responseData:responseData })
+					}
+				}
+				
+				var handler = winc_interface_widget._messageHandler
+				if (message.handlerName) {
+					handler = messageHandlers[message.handlerName]
+				}
+				
+				try {
+					handler(message.data, responseCallback)
+				} catch(exception) {
+					if (typeof console != 'undefined') {
+						console.log("winc_interface_widget: WARNING: javascript handler threw.", message, exception)
+					}
+				}
+			}
+		})
+	}
+	
+	function _handleMessageFromObjC(messageJSON) {
+		if (receiveMessageQueue) {
+			receiveMessageQueue.push(messageJSON)
+		} else {
+			_dispatchMessageFromObjC(messageJSON)
+		}
+	}
+
+    function closeWindow(dataJSON){
+        var handlerName = 'closeWindow';
+        callHandler(handlerName ,dataJSON)
+    }
+    function printData(dataJSON){
+        var handlerName = 'printData';
+        callHandler(handlerName ,dataJSON)
+    }
+    function setScrollY(dataJSON){
+        var handlerName = 'setScrollY';
+        callHandler(handlerName ,dataJSON)
+    }
+    function getChatInfoMsg(dataJSON){
+        var handlerName = 'getChatInfoMsg';
+        callHandler(handlerName ,dataJSON)
+    }
+
+    function takePhoto(dataJSON){
+        var handlerName = 'takePhoto';
+        callHandler(handlerName ,dataJSON)
+    }
+    function selectPhoto(dataJSON){
+        var handlerName = 'selectPhoto';
+        callHandler(handlerName ,dataJSON)
+    }
+    function getCurrentPosition(dataJSON){
+        var handlerName = 'getCurrentPosition';
+        callHandler(handlerName ,dataJSON)
+    }
+    function elecSignature(dataJSON){
+        var handlerName = 'elecSignature';
+        callHandler(handlerName ,dataJSON)
+    }
+    function openGallery(dataJSON){
+        var handlerName = 'openGallery';
+        callHandler(handlerName ,dataJSON)
+    }
+
+    function shareParams(dataJSON){
+        var handlerName = 'shareParams';
+        callHandler(handlerName ,dataJSON)
+    }
+
+    function jumpRouteMap(dataJSON){
+        var handlerName = 'jumpRouteMap';
+        callHandler(handlerName ,dataJSON)
+    }
+
+    function requestServerDataByJs(dataJSON,aParam){
+        var handlerName = 'requestServerDataByJs';
+        callHandler(handlerName ,dataJSON)
+    }
+
+    function setFuncMarker(dataJSON){
+        var handlerName = 'setFuncMarker';
+        callHandler(handlerName ,dataJSON)
+    }
+    function jumpStoreTask(dataJSON){
+        var handlerName = 'jumpStoreTask';
+        callHandler(handlerName ,dataJSON)
+    }
+    function openNewWebView(dataJSON){
+        var handlerName = 'openNewWebView';
+        callHandler(handlerName ,dataJSON)
+    }
+
+	var widget = {
+		init: init,
+		send: send,
+		registerHandler: registerHandler,
+		callHandler: callHandler,
+        scanBarcode: scanBarcode,
+        clickOnAndroid: clickOnAndroid,
+        finish: finish,
+        toLoginPage: toLoginPage,
+		_fetchQueue: _fetchQueue,
+		_handleMessageFromObjC: _handleMessageFromObjC,
+        getChatInfoMsg:getChatInfoMsg,
+        closeWindow:closeWindow,
+        printData:printData,
+        setScrollY:setScrollY,
+        takePhoto:takePhoto,
+        selectPhoto:selectPhoto,
+        getCurrentPosition:getCurrentPosition,
+        downFile: downFile,
+        softkeyboardChange: softkeyboardChange,
+        registBackListen: registBackListen,
+        elecSignature:elecSignature,
+        onResize: onResize,
+        openGallery:openGallery,
+        shareParams:shareParams,
+        jumpRouteMap:jumpRouteMap,
+        requestServerDataByJs:requestServerDataByJs,
+        removeFuncMarker:removeFuncMarker,
+        shareTextToWeChat:shareTextToWeChat,
+        functip:functip,
+        addAcvt:addAcvt,
+        updateStoreInfoDatas:updateStoreInfoDatas,
+        needUpdateStoreList:needUpdateStoreList,
+        addNewStore:addNewStore,
+        goHome:goHome,
+        setFuncMarker:setFuncMarker,
+        openNewWebView:openNewWebView,
+        jumpStoreTask:jumpStoreTask
+
+	}
+    window.winc_interface_widget = widget;
+
+	var doc = document
+	_createQueueReadyIframe(doc)
+	var readyEvent = doc.createEvent('Events')
+	readyEvent.initEvent('WebViewJavascriptBridgeReady')
+	readyEvent.bridge = winc_interface_widget
+	doc.dispatchEvent(readyEvent)
+})();

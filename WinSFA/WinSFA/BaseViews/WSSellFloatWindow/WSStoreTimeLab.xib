@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_0" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="WSStoreTimeLab">
+            <rect key="frame" x="0.0" y="0.0" width="394" height="112"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kal-TD-qdi">
+                    <rect key="frame" x="0.0" y="0.0" width="394" height="112"/>
+                    <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="timeStoreBg" translatesAutoresizingMaskIntoConstraints="NO" id="g2m-hz-cwH">
+                            <rect key="frame" x="0.0" y="0.0" width="124.66666666666667" height="112"/>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=":" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OZP-Mj-tBC">
+                            <rect key="frame" x="124.66666666666669" y="0.0" width="10" height="112"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="10" id="JSK-DL-z6Y"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="timeStoreBg" translatesAutoresizingMaskIntoConstraints="NO" id="W7I-Hw-eRf">
+                            <rect key="frame" x="134.66666666666666" y="0.0" width="124.66666666666666" height="112"/>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=":" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cyp-E9-uum">
+                            <rect key="frame" x="259.33333333333331" y="0.0" width="10" height="112"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="10" id="gBw-tr-gPs"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="timeStoreBg" translatesAutoresizingMaskIntoConstraints="NO" id="5bf-zg-bc3">
+                            <rect key="frame" x="269.33333333333331" y="0.0" width="124.66666666666669" height="112"/>
+                        </imageView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="W7I-Hw-eRf" firstAttribute="width" secondItem="g2m-hz-cwH" secondAttribute="width" id="XjM-3T-O7c"/>
+                        <constraint firstItem="5bf-zg-bc3" firstAttribute="width" secondItem="g2m-hz-cwH" secondAttribute="width" id="tNu-3A-qix"/>
+                    </constraints>
+                </stackView>
+            </subviews>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="kal-TD-qdi" secondAttribute="trailing" id="9gl-79-qTl"/>
+                <constraint firstAttribute="bottom" secondItem="kal-TD-qdi" secondAttribute="bottom" id="J7o-Iz-tm7"/>
+                <constraint firstItem="kal-TD-qdi" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="qfw-6h-OWN"/>
+                <constraint firstItem="kal-TD-qdi" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="zvX-67-1co"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="timeImg1" destination="g2m-hz-cwH" id="0Gq-lq-vDv"/>
+                <outlet property="timeImg2" destination="W7I-Hw-eRf" id="PzI-D6-HZN"/>
+                <outlet property="timeImg3" destination="5bf-zg-bc3" id="Js4-LT-g0m"/>
+            </connections>
+            <point key="canvasLocation" x="-657" y="-355"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="timeStoreBg" width="145" height="148"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

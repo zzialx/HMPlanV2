@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>html</key>
+	<string>WSHtmlMediaPanel</string>
+	<key>mp4</key>
+	<string>WSVideoMediaPanel</string>
+	<key>ppt</key>
+	<string>WSXLSXMediaPanel</string>
+	<key>pdf</key>
+	<string>WSPDFMediaPanel</string>
+	<key>xlsx</key>
+	<string>WSXLSXMediaPanel</string>
+	<key>xls</key>
+	<string>WSXLSXMediaPanel</string>
+	<key>docx</key>
+	<string>WSXLSXMediaPanel</string>
+	<key>doc</key>
+	<string>WSXLSXMediaPanel</string>
+	<key>pptx</key>
+	<string>WSXLSXMediaPanel</string>
+	<key>JPG</key>
+	<string>WSXLSXMediaPanel</string>
+	<key>jpg</key>
+	<string>WSXLSXMediaPanel</string>
+	<key>bmp</key>
+	<string>WSXLSXMediaPanel</string>
+	<key>BMP</key>
+	<string>WSXLSXMediaPanel</string>
+	<key>GIF</key>
+	<string>WSXLSXMediaPanel</string>
+	<key>gif</key>
+	<string>WSXLSXMediaPanel</string>
+	<key>png</key>
+	<string>WSXLSXMediaPanel</string>
+	<key>PNG</key>
+	<string>WSXLSXMediaPanel</string>
+	<key>JPEG</key>
+	<string>WSXLSXMediaPanel</string>
+	<key>jpeg</key>
+	<string>WSXLSXMediaPanel</string>
+</dict>
+</plist>

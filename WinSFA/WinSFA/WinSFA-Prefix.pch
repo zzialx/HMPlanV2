@@ -1,0 +1,60 @@
+//
+// Prefix header for all source files of the 'WinSFA' target in the 'WinSFA' project
+//
+
+//#import <Availability.h>
+
+#ifdef __OBJC__
+
+#define AFNETWORKING_ALLOW_INVALID_SSL_CERTIFICATES
+
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import <SystemConfiguration/SystemConfiguration.h>
+#import <MobileCoreServices/MobileCoreServices.h>
+#import <WinCore.h>
+
+#import "WSEncrpytion.h"
+#import "WSAppDelegate.h"
+#import "WinSFA.h"
+#import "WSPlistHelper.h"
+#import "WSHTextField.h"
+#import "WSCurrentTime.h"
+#import "WSAppData.h"
+#import "WCLogManager.h"
+#import "Md5Manager.h"
+#import "WSSkinStyleManagerKit.h"
+#import "FMDB.h"
+#import "WSMappingObject.h"
+#import "WSAddAcvtTable.h"
+#import "WSDBManagerTable.h"
+#import "WSVisitStoreActionTable.h"
+#import "WSOffLineUploadTable.h"
+#import "WSPickerView.h"
+#import "WSHttpURLHelper.h"
+#import "WSAcvtBean_qst_opt.h"
+#import "WSDictBean.h"
+#import "WSInPlanStoreBean.h"
+#import "WSOutPlanStoreBean.h"
+#import "WSTLAlertManager.h"
+#import "SVProgressHUD.h"
+#import "SVProgressHUD+ShowHud.h"
+
+#import "NSDateFormatter+Category.h"
+#import "UIColor+Additions.h"
+#import "UILabel+Additional.h"
+#import "UIDevice+Addtional.h"
+#import "NSError+Description.h"
+#import "UIView+ViewController.h"
+#import "UIView+ViewFrameGeometry.h"
+#import "UIViewController+Additional.h"
+#import "WSComponyInfomationViewModel.h"
+#import "WSComponyInfomationManager.h"
+#import <RongCallKit/RongCallKit.h>
+#import <RongIMKit/RongIMKit.h>
+#import "WSRongCloudManager.h"
+#import "WSHelpSalesHeader.h"
+#import "WSHelpSalesAlertView.h"
+
+
+#endif

@@ -1,0 +1,15 @@
+//
+//  PromOptViewController.h
+//  WinChannelFrameWork
+//
+//  Created by winchannel on 12-1-13.
+//  Copyright 2012年 __MyCompanyName__. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+#import "BaseViewController.h"
+
+@interface WSPromOptViewController : BaseViewController {}
+
+@property (nonatomic, strong) UISwitch *isUpdata;
+@end

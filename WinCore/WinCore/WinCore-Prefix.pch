@@ -1,0 +1,10 @@
+//
+// sam wang
+//
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+    #import <QuartzCore/QuartzCore.h>
+    #import "WinCore.h"
+
+#endif

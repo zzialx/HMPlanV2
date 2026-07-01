@@ -1,0 +1,16 @@
+//
+//  WSStoreAcvtArray.h
+//  WinSFA
+//
+//  Created by yang on 15/10/14.
+//  Copyright © 2015年 WinChannel. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+#import "WSBaseBeanArray.h"
+
+@interface WSStoreAcvtArray : WSBaseBeanArray
+
+- (NSArray *)getAcvtArrayWithStoreID:(NSString *)storeID;
+
+@end

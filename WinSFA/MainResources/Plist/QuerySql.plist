@@ -1,0 +1,501 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>allStoresQuerySql</key>
+	<string>select store.[store_Id] Id, store.[empId] empId, store.[name] name, store.[custCode] custCode, store.[code] code, store.[seq] seq ,store.[styp] styp, store.[sv] sv, store.[follow] follow,store.[qrcode] qrcode, store.dist_rule_id drId,
+            (case when bsv.emp_id = store.empId and bsv.biz_date is not null then 1 else 0 end) as  plan, ifnull(status.[status],0) as actionState ,
+            store.[addr],store.[lon] longitude,store.[lat] latitude,status.[func_code],bsv.[biz_date] as biz_date,bf.[fv] as order_id,
+            store.[store_other_col],(case when acvtdis.answer is not null then  acvtdis.answer else locacvtdis.answer end) as storeImg,wis.local_image as local_ImageID,wis.INTIME as inTime,wis.OUTTIME as outTime,store.search_objId as noteName,store.[phone],vis.time,vis.loc_json,store.[detail_info] ,
+            attribute.acvt_qst_answer attri, acvtdiszb.answer as prepareState,store.[storesFilter],store.[state],store.[last_man],ifnull(last_dateDis.answer,
+            store.[last_date]) as last_date,last_transactionDis.answer as last_transaction,store_month_visit_timeDis.acvt_qst_answer as store_month_visit_time,last_num_q_dis.answer as last_num_q,store.[distances] distance,store.[row_number],item_name,department_id as departmentId ,
+            acvtMapIcondis.answer as mapPicDis,acvtMapdotDisplay.answer as dotDisplay,
+            case when status.[status]=2 or status.from_module = &apos;助销&apos; then 0 when status.[status]=1  or status.from_module = &apos;已助销&apos;  then 2 else 1 end as actionStateSeq,
+            bsv.seq as visitPlanMapOrder $isRouteStore$ , store.ctyp , storeStatus.optName,storeStatus1.monthVisitNumber,storeStatus2.monthHelpVisitNumber,localOrangeStore.answer, bsod1.item1 as routeName,status.from_module as fromModuleName from ws_base_store_table store
+            left join base_funcs bf on bf.opt like &apos;%%isOrder%%&apos; and fc in
+            (select func_code from visit_store_action where store_id=store.store_Id)
+            left join ws_base_store_visitplan bsv on bsv.store_id=store.store_Id and bsv.biz_date =  &apos;$biz_date$&apos;  and bsv.emp_id= store.[empId]
+            left join (select bsad.acvt_qst_answer as answer, bsad.sid as sid ,bsad.emp_id as empid from base_store_acvt_dis bsad
+            join base_acvt_qst baq on baq.acvtId = bsad.acvtId and baq.acvtQstId = bsad.acvtQstId
+            where baq.qstCod=&apos;smallImgUrl&apos;)acvtdis on acvtdis.sid = store.store_Id and acvtdis.empid =  &apos;$empId$&apos;
+            left join (select vsad.acvt_qst_answer as answer, vsad.gen_id as gen_id ,vsad.emp_id as empid from visit_store_acvt_data vsad
+            join base_acvt_qst baq on baq.acvtId = vsad.acvtId and baq.acvtQstId = vsad.acvtQstId
+            where baq.isAcvtName =&apos;9&apos; and baq.qstType = &apos;P&apos;) locacvtdis on locacvtdis.gen_id = store.acvt_genId and locacvtdis.empid = &apos;$empId$&apos;
+            left join (select bsad.acvt_qst_answer as answer, bsad.sid as sid ,bsad.emp_id as empid from base_store_acvt_dis bsad
+            join base_acvt_qst baq on baq.acvtId = bsad.acvtId and baq.acvtQstId = bsad.acvtQstId
+            where baq.qstCod=&apos;picdisplay&apos;) acvtMapIcondis on acvtMapIcondis.sid = store.store_Id and acvtMapIcondis.empid =  &apos;$empId$&apos;
+            left join (select bsad.acvt_qst_answer as answer, bsad.sid as sid ,bsad.emp_id as empid from base_store_acvt_dis bsad
+            join base_acvt_qst baq on baq.acvtId = bsad.acvtId and baq.acvtQstId = bsad.acvtQstId
+            where baq.qstCod=&apos;dotDisplay&apos;) acvtMapdotDisplay on acvtMapdotDisplay.sid = store.store_Id and acvtMapdotDisplay.empid =  &apos;$empId$&apos;
+            left join (select bsad.acvt_qst_answer as answer, bsad.sid as sid ,bsad.emp_id as empid from base_store_acvt_dis bsad
+            join base_acvt_qst baq on baq.acvtId = bsad.acvtId and baq.acvtQstId = bsad.acvtQstId
+            where baq.qstCod=&apos;stores_zbzt&apos;)acvtdiszb on acvtdiszb.sid = store.store_Id and acvtdiszb.empid =  &apos;$empId$&apos;
+            left join (select bsad.acvt_qst_answer as answer, bsad.sid as sid ,bsad.emp_id as empid from base_store_acvt_dis bsad
+            join base_acvt_qst baq on baq.acvtId = bsad.acvtId and baq.acvtQstId = bsad.acvtQstId
+            where baq.qstCod=&apos;last_date&apos;)last_dateDis on last_dateDis.sid = store.store_Id and last_dateDis.empid =  &apos;$empId$&apos;
+            left join (select bsad.acvt_qst_answer as answer, bsad.sid as sid ,bsad.emp_id as empid from base_store_acvt_dis bsad
+            join base_acvt_qst baq on baq.acvtId = bsad.acvtId and baq.acvtQstId = bsad.acvtQstId
+            where baq.qstCod=&apos;last_transaction&apos;)last_transactionDis on last_transactionDis.sid = store.store_Id and last_transactionDis.empid =  &apos;$empId$&apos;
+            left join( select distinct acvt_qst_answer,baq.qstName ,bsad.sid from base_store_acvt_dis bsad
+            join base_acvt ba on ba._id=bsad.acvtId and ba.acvtCode=&apos;store_msg&apos; join base_acvt_qst baq
+            on baq.acvtId=ba._id and baq._id=bsad.acvtQstId) store_month_visit_timeDis on store_month_visit_timeDis.sid=store.store_Id
+            left join (select bsad.acvt_qst_answer as answer, bsad.sid as sid ,bsad.emp_id as empid from base_store_acvt_dis bsad
+            join base_acvt_qst baq on baq.acvtId = bsad.acvtId and baq.acvtQstId = bsad.acvtQstId
+            where baq.qstCod=&apos;last_num_q&apos;)last_num_q_dis on last_num_q_dis.sid = store.store_Id and last_num_q_dis.empid =  &apos;$empId$&apos;
+            left join visit_store_status status on
+            store.store_Id=status.store_id and store.empId=status.emp_id $func_code$
+            left join wch_inoutStore wis on wis.store_id = store.store_Id and wis.emp_id = store.empId and wis.modulefc = status.func_code
+            left join visit_inout_store vis on
+            vis.func_view=&apos;V20S01&apos; and vis.emp_id=store.empId and vis.store_id=store.store_Id $vis_parentfc$
+            left join( select distinct acvt_qst_answer,baq.qstName ,bsad.sid from base_store_acvt_dis bsad
+            join base_acvt ba on ba._id=bsad.acvtId and ba.acvtCode=&apos;store_attribute_icon&apos; join base_acvt_qst baq
+            on baq.acvtId=ba._id and baq._id=bsad.acvtQstId) attribute on attribute.sid=store.store_Id
+        left join (SELECT sid,GROUP_CONCAT(optName) as optName FROM (select acvt_qst_answer,opt.optName optName,bsad.sid from base_store_acvt_dis bsad
+            join base_acvt ba on ba._id=bsad.acvtId and ba.acvtCode=&apos;searchStore&apos;
+            join base_acvt_qst baq on baq.qsttype = &apos;DB&apos; and baq.acvtId=ba._id and baq._id=bsad.acvtQstId
+            join base_acvt_qst_opt opt on baq.acvtQstid = opt.acvtQstId and opt._id = bsad.acvt_qst_answer) GROUP BY sid) storeStatus on storeStatus.sid=store.store_Id
+        left join (select bsad.acvt_qst_answer as answer, bsad.sid from  visit_store_acvt_data bsad
+            join base_acvt_qst baq on baq.acvtId = bsad.acvtId and baq._id = bsad.acvtQstId and  baq.isAcvtName=&apos;17&apos; ) localOrangeStore on localOrangeStore.sid=store.store_Id
+        left join (SELECT sid,acvt_qst_answer as monthVisitNumber FROM (select acvt_qst_answer,bsad.sid from base_store_acvt_dis bsad
+                join base_acvt ba on ba._id=bsad.acvtId and ba.acvtCode=&apos;searchStore&apos;
+                join base_acvt_qst baq on baq.qstCod = &apos;byybf_bq&apos;  and baq.acvtId=ba._id and baq._id=bsad.acvtQstId) GROUP BY sid) storeStatus1 on storeStatus1.sid=store.store_Id
+        left join (SELECT sid,acvt_qst_answer as monthHelpVisitNumber FROM (select acvt_qst_answer,bsad.sid from base_store_acvt_dis bsad
+                join base_acvt ba on ba._id=bsad.acvtId and ba.acvtCode=&apos;searchStore&apos;
+                join base_acvt_qst baq on baq.qstCod = &apos;byyzx_bq&apos;  and baq.acvtId=ba._id and baq._id=bsad.acvtQstId) GROUP BY sid) storeStatus2 on storeStatus2.sid=store.store_Id
+
+            $acvtSearchCondition$
+            $routeNameCondition$
+            where $customizedEmpId$ $likeStypStr$ $isFollowStore$ $nameOrCodeSearch$ $isVisited$ $inSearchObjStr$ $storeFiletr$ $storeClass$ $customizedGroup$
+            order by actionStateSeq, $planSeq$ $isLastDtae$ ifnull(status.[status],1), $visitPlanMapOrder$ $distanceSeq$ cast(store.row_number as int), cast(store.[seq] as int) ,$isRouteStoreSeq$ store.ID $limit$</string>
+	<key>acvtSearchStoreQuerySql</key>
+	<string>select store.[store_Id] Id, store.[empId] empId, store.[name] name, store.[custCode] custCode, store.[code] code, store.[seq] seq,store.[styp] styp, store.[sv] sv, store.[follow] follow, store.dist_rule_id drId,
+            (case when bsv.biz_date is not null then 1 else 0 end) as  plan, ifnull(status.[status],0) as actionState , store.[addr],
+            store.[lon] longitude,store.[lat] latitude,status.[func_code],bsv.[biz_date] as biz_date,bf.[fv] as order_id,
+            store.[store_other_col],(case when acvtdis.answer is not null then  acvtdis.answer else locacvtdis.answer end) as storeImg,store.[phone],vis.time,vis.loc_json,store.[detail_info] ,
+            attribute.acvt_qst_answer attri, acvtdiszb.answer as prepareState,store.[storesFilter],store.[state] ,store.[last_man],store.[last_date],
+            store.[distances] distance,ifnull(last_dateDis.answer,store.[last_date]) as last_date,last_transactionDis.answer as last_transaction,last_num_q_dis.answer as last_num_q,store.[row_number],item_name,
+            department_id as departmentId ,acvtMapIcondis.answer as mapPicDis ,
+            case when status.[status]=2 or status.from_module = &apos;助销&apos; then 0 when status.[status]=1  or status.from_module = &apos;已助销&apos;  then 2 else 1 end as actionStateSeq,
+            store.ctyp, storeStatus.optName,storeStatus1.monthVisitNumber,storeStatus2.monthHelpVisitNumber,localOrangeStore.answer, bsod1.item1 as routeName,status.from_module as fromModuleName from ws_base_store_table store
+            left join base_funcs bf on bf.opt like &apos;%%isOrder%%&apos; and fc in
+            (select func_code from visit_store_action where store_id=store.store_Id)
+            left join ws_base_store_visitplan bsv on bsv.store_id=store.store_Id and bsv.biz_date =  &apos;$biz_date$&apos;
+            left join (select bsad.acvt_qst_answer as answer, bsad.sid as sid ,bsad.emp_id as empid from base_store_acvt_dis bsad
+            join base_acvt_qst baq on baq.acvtId = bsad.acvtId and baq.acvtQstId = bsad.acvtQstId
+            where baq.qstCod=&apos;smallImgUrl&apos;)acvtdis on acvtdis.sid = store.store_Id and acvtdis.empid =  &apos;$empId$&apos;
+            left join (select vsad.acvt_qst_answer as answer, vsad.gen_id as gen_id ,vsad.emp_id as empid from visit_store_acvt_data vsad
+            join base_acvt_qst baq on baq.acvtId = vsad.acvtId and baq.acvtQstId = vsad.acvtQstId
+            where baq.isAcvtName =&apos;9&apos; and baq.qstType = &apos;P&apos;) locacvtdis on locacvtdis.gen_id = store.acvt_genId and locacvtdis.empid = &apos;$empId$&apos;
+            left join (select bsad.acvt_qst_answer as answer, bsad.sid as sid ,bsad.emp_id as empid from base_store_acvt_dis bsad
+            join base_acvt_qst baq on baq.acvtId = bsad.acvtId and baq.acvtQstId = bsad.acvtQstId
+            where baq.qstCod=&apos;picdisplay&apos;) acvtMapIcondis on acvtMapIcondis.sid = store.store_Id and acvtMapIcondis.empid =  &apos;$empId$&apos;
+            left join (select bsad.acvt_qst_answer as answer, bsad.sid as sid ,bsad.emp_id as empid from base_store_acvt_dis bsad
+            join base_acvt_qst baq on baq.acvtId = bsad.acvtId and baq.acvtQstId = bsad.acvtQstId
+            where baq.qstCod=&apos;stores_zbzt&apos;)acvtdiszb on acvtdiszb.sid = store.store_Id and acvtdiszb.empid =  &apos;$empId$&apos;
+            left join (select bsad.acvt_qst_answer as answer, bsad.sid as sid ,bsad.emp_id as empid from base_store_acvt_dis bsad
+            join base_acvt_qst baq on baq.acvtId = bsad.acvtId and baq.acvtQstId = bsad.acvtQstId
+            where baq.qstCod=&apos;last_date&apos;)last_dateDis on last_dateDis.sid = store.store_Id and last_dateDis.empid =  &apos;$empId$&apos;
+            left join (select bsad.acvt_qst_answer as answer, bsad.sid as sid ,bsad.emp_id as empid from base_store_acvt_dis bsad
+            join base_acvt_qst baq on baq.acvtId = bsad.acvtId and baq.acvtQstId = bsad.acvtQstId
+            where baq.qstCod=&apos;last_transaction&apos;)last_transactionDis on last_transactionDis.sid = store.store_Id and last_transactionDis.empid =  &apos;$empId$&apos;
+            left join (select bsad.acvt_qst_answer as answer, bsad.sid as sid ,bsad.emp_id as empid from base_store_acvt_dis bsad
+            join base_acvt_qst baq on baq.acvtId = bsad.acvtId and baq.acvtQstId = bsad.acvtQstId
+            where baq.qstCod=&apos;last_num_q&apos;)last_num_q_dis on last_num_q_dis.sid = store.store_Id and last_num_q_dis.empid =  &apos;$empId$&apos;
+            left join visit_store_status status on
+            store.store_Id=status.store_id and store.empId=status.emp_id $func_code$
+            left join visit_inout_store vis on
+            vis.func_view=&apos;V20S01&apos; and vis.emp_id=store.empId and vis.store_id=store.store_Id $vis_parentfc$
+            left join( select distinct acvt_qst_answer,baq.qstName ,bsad.sid from base_store_acvt_dis bsad
+            join base_acvt ba on ba._id=bsad.acvtId and ba.acvtCode=&apos;store_attribute_icon&apos; join base_acvt_qst baq
+            on baq.acvtId=ba._id and baq._id=bsad.acvtQstId) attribute on attribute.sid=store.store_Id
+                    left join (SELECT sid,GROUP_CONCAT(optName) as optName FROM (select acvt_qst_answer,opt.optName optName,bsad.sid from base_store_acvt_dis bsad
+            join base_acvt ba on ba._id=bsad.acvtId and ba.acvtCode=&apos;searchStore&apos;
+            join base_acvt_qst baq on baq.qsttype = &apos;DB&apos; and baq.acvtId=ba._id and baq._id=bsad.acvtQstId
+            join base_acvt_qst_opt opt on baq.acvtQstid = opt.acvtQstId and opt._id = bsad.acvt_qst_answer) GROUP BY sid) storeStatus on storeStatus.sid=store.store_Id
+            left join (select bsad.acvt_qst_answer as answer, bsad.sid from  visit_store_acvt_data bsad
+            join base_acvt_qst baq on baq.acvtId = bsad.acvtId and baq._id = bsad.acvtQstId and  baq.isAcvtName=&apos;17&apos; ) localOrangeStore on localOrangeStore.sid=store.store_Id
+            left join (SELECT sid,acvt_qst_answer as monthVisitNumber FROM (select acvt_qst_answer,bsad.sid from base_store_acvt_dis bsad
+                        join base_acvt ba on ba._id=bsad.acvtId and ba.acvtCode=&apos;searchStore&apos;
+                        join base_acvt_qst baq on baq.qstCod = &apos;byybf_bq&apos;  and baq.acvtId=ba._id and baq._id=bsad.acvtQstId) GROUP BY sid) storeStatus1 on storeStatus1.sid=store.store_Id
+            left join (SELECT sid,acvt_qst_answer as monthHelpVisitNumber FROM (select acvt_qst_answer,bsad.sid from base_store_acvt_dis bsad
+                    join base_acvt ba on ba._id=bsad.acvtId and ba.acvtCode=&apos;searchStore&apos;
+                    join base_acvt_qst baq on baq.qstCod = &apos;byyzx_bq&apos;  and baq.acvtId=ba._id and baq._id=bsad.acvtQstId) GROUP BY sid) storeStatus2 on storeStatus2.sid=store.store_Id
+
+            $sortAcvtSearchCondition$
+            $acvtSearchCondition$
+            $routeNameCondition$
+            where $customizedEmpId$ $distanceCondition$  $likeStypStr$ $isFollowStore$ $nameOrCodeSearch$ $isVisited$ $inSearchObjStr$ $storeClass$ $customizedGroup$ order by $seq$ $distanceSeq$ store.ID $limit$</string>
+	<key>queryStoreProdSql</key>
+	<string>select distinct prod._id Id,prod.name,prod.cod,prod.searchcod,prod.pTyp,prod.brand,prod.barcode barcod,prod.price price,
+            prod.url,prod.seq,prod.addproduct_json_data,prod.blockPrice,prod.regex,prod.pack,prod.size,prod.series,prod.serverCode,prod.memo1,prod.memo2,prod.memo3,prod.memo4,prod.pinyin,prod.expirydate,prod.memo,prod.prodtrees,prod.barcode2
+            from base_product prod join base_in_store_prod isp on prod._id= isp.prod_id where isp.dist=1 $storeId$   $prodBrand$   $pTypeCondition$  $paramsCondition$ $filterProdCondition$ order by isp.[_id]</string>
+	<key>queryAcvtProdDisSql</key>
+	<string>select * from base_store_prod_dis bspd join (select acvt_qst_answer from base_store_acvt_dis  bsas  where  bsas.sid = $storeId$ and bsas.acvtId = $acvtId$ and bsas.acvtQstId = $acvtQstId$) acvtdis on (acvtdis.acvt_qst_answer = bspd.genid and bspd.prod_id = $prodId$  and bspd.store_id = $storeId$)</string>
+	<key>queryProdDisSql</key>
+	<string>select * from base_store_prod_dis bspd where  bspd.prod_id = $prodId$  and bspd.store_id = $storeId$ $ConditionWithfuncCode$</string>
+	<key>todayVisitStoresQuerySql</key>
+	<string>select distinct store.store_Id Id, store.empId, store.name,last_date,last_man,store.code, store.follow,store.custCode,store.[qrcode] qrcode, store.styp,store.phone, store.sv,store.dist_rule_id drId,
+            (case when bsv.biz_date is not null then 1 else 0 end) as  plan, ifnull(status.[status],0) as actionState ,store.addr,store.lon longitude,store.lat
+            latitude,store.search_objId as noteName,(case when acvtdis.answer is not null then  acvtdis.answer else locacvtdis.answer end) as storeImg,wis.local_image as local_ImageID,wis.INTIME as inTime,wis.OUTTIME as outTime,attribute.acvt_qst_answer attri, acvtdiszb.answer as prepareState,
+            store_month_visit_timeDis.answer as store_month_visit_time,last_num_q_dis.answer as last_num_q,store.[storesFilter],store.[state],store.[last_man],store.[last_date],store.[distances] distance,store.[row_number],
+            store.state,item_name,department_id as departmentId ,bsv.seq seq, store.ctyp ,storeStatus.optName,storeStatus1.monthVisitNumber,storeStatus2.monthHelpVisitNumber,localOrangeStore.answer from ws_base_store_table store
+            left join base_funcs bf on bf.opt like &apos;%%isOrder%%&apos; and fc in (select func_code from visit_store_action where store_id=store.store_Id)
+            join ws_base_store_visitplan bsv on bsv.store_id=store.store_Id  and store.empId = bsv.emp_id
+            left join visit_store_status status on store.store_Id=status.store_id and bsv.emp_id=status.emp_id and status.[func_code] in ( $funcCode$)
+            left join wch_inoutStore wis on wis.store_id = store.store_Id and wis.emp_id = store.empId and wis.modulefc = status.func_code
+            left join (select bsad.acvt_qst_answer as answer, bsad.sid as sid ,bsad.emp_id as empid from base_store_acvt_dis bsad
+            join base_acvt_qst baq on baq.acvtId = bsad.acvtId and baq.acvtQstId = bsad.acvtQstId
+            where baq.qstCod=&apos;smallImgUrl&apos;)acvtdis on acvtdis.sid = store.store_Id and acvtdis.empid = $empId$
+            left join (select vsad.acvt_qst_answer as answer, vsad.gen_id as gen_id ,vsad.emp_id as empid from visit_store_acvt_data vsad
+            join base_acvt_qst baq on baq.acvtId = vsad.acvtId and baq.acvtQstId = vsad.acvtQstId
+            where baq.isAcvtName =&apos;9&apos; and baq.qstType = &apos;P&apos;) locacvtdis on locacvtdis.gen_id = store.acvt_genId and locacvtdis.empid = $empId$
+            left join (select bsad.acvt_qst_answer as answer, bsad.sid as sid ,bsad.emp_id as empid from base_store_acvt_dis bsad
+            join base_acvt_qst baq on baq.acvtId = bsad.acvtId and baq.acvtQstId = bsad.acvtQstId
+            where baq.qstCod=&apos;stores_zbzt&apos;)acvtdiszb on acvtdiszb.sid = store.store_Id and acvtdiszb.empid = $empId$
+            left join (select bsad.acvt_qst_answer as answer, bsad.sid as sid ,bsad.emp_id as empid from base_store_acvt_dis bsad
+            join base_acvt_qst baq on baq.acvtId = bsad.acvtId and baq.acvtQstId = bsad.acvtQstId
+            where baq.qstCod=&apos;last_num&apos;)store_month_visit_timeDis on store_month_visit_timeDis.sid = store.store_Id and store_month_visit_timeDis.empid = $empId$
+            left join (select bsad.acvt_qst_answer as answer, bsad.sid as sid ,bsad.emp_id as empid from base_store_acvt_dis bsad
+            join base_acvt_qst baq on baq.acvtId = bsad.acvtId and baq.acvtQstId = bsad.acvtQstId
+            where baq.qstCod=&apos;last_num_q&apos;)last_num_q_dis on last_num_q_dis.sid = store.store_Id and last_num_q_dis.empid =  $empId$
+            left join (SELECT sid,GROUP_CONCAT(optName) as optName FROM (select acvt_qst_answer,opt.optName optName,bsad.sid from base_store_acvt_dis bsad
+            join base_acvt ba on ba._id=bsad.acvtId and ba.acvtCode=&apos;searchStore&apos;
+            join base_acvt_qst baq on baq.qsttype=&apos;DB&apos; and baq.acvtId=ba._id and baq._id=bsad.acvtQstId
+            join base_acvt_qst_opt opt on baq.acvtQstid = opt.acvtQstId and opt._id = bsad.acvt_qst_answer) GROUP BY sid) storeStatus on storeStatus.sid=store.store_Id
+            left join (select bsad.acvt_qst_answer as answer, bsad.sid from  visit_store_acvt_data bsad
+            join base_acvt_qst baq on baq.acvtId = bsad.acvtId and baq._id = bsad.acvtQstId and  baq.isAcvtName=&apos;17&apos; ) localOrangeStore on localOrangeStore.sid=store.store_Id
+            left join (SELECT sid,acvt_qst_answer as monthVisitNumber FROM (select acvt_qst_answer,bsad.sid from base_store_acvt_dis bsad
+                        join base_acvt ba on ba._id=bsad.acvtId and ba.acvtCode=&apos;searchStore&apos;
+                        join base_acvt_qst baq on baq.qstCod = &apos;byybf_bq&apos;  and baq.acvtId=ba._id and baq._id=bsad.acvtQstId) GROUP BY sid) storeStatus1 on storeStatus1.sid=store.store_Id
+            left join (SELECT sid,acvt_qst_answer as monthHelpVisitNumber FROM (select acvt_qst_answer,bsad.sid from base_store_acvt_dis bsad
+                    join base_acvt ba on ba._id=bsad.acvtId and ba.acvtCode=&apos;searchStore&apos;
+                    join base_acvt_qst baq on baq.qstCod = &apos;byyzx_bq&apos;  and baq.acvtId=ba._id and baq._id=bsad.acvtQstId) GROUP BY sid) storeStatus2 on storeStatus2.sid=store.store_Id
+            left join( select distinct acvt_qst_answer,baq.qstName,bsad.sid from
+            base_store_acvt_dis bsad join base_acvt ba on ba._id=bsad.acvtId and ba.acvtCode=&apos;store_attribute_icon&apos;
+            join base_acvt_qst baq on baq.acvtId=ba._id and baq._id=bsad.acvtQstId)attribute on attribute.sid=store.store_Id where bsv.emp_id =  $empId$
+            and bsv.biz_date = $bizDate$ $isFollowStore$ $inSearchObjStr$ $inStypStr$ order by ifnull(status.[status],1),cast(bsv.seq as int)
+            
+    </string>
+	<key>queryStoreRedisMoreProductSql</key>
+	<string>select distinct prod._id Id,prod.name,prod.cod,prod.searchcod,prod.pTyp,prod.brand,prod.barcode barcod,
+            prod.url,prod.seq,prod.addproduct_json_data,prod.blockPrice,prod.regex,prod.pack,prod.size,prod.series,prod.serverCode ,prod.memo1,prod.memo2,prod.memo3,prod.memo4,prod.expirydate,prod.pinyin,prod.barcode2
+            from base_product prod join base_store_prod_dis bspd on prod._id = bspd.prod_id where $funcCode$  $storeId$   $prodBrand$   $pTypeCondition$  $paramsCondition$ order by prod.[seq]</string>
+	<key>queryStoreRedisBrandSortProductSql</key>
+	<string> select distinct prod._id Id,prod.name,prod.cod,prod.searchcod,prod.pTyp,prod.brand,prod.barcode barcod,prod.price,
+            prod.url,prod.seq,prod.addproduct_json_data,prod.blockPrice,prod.regex,prod.pack,prod.size,prod.series,prod.serverCode,prod.memo1,prod.memo2,prod.memo3,prod.memo4,prod.expirydate,prod.pinyin,prod.barcode2
+            from base_product prod  join base_in_store_prod bisd  on  prod._id = bisd.prod_id   $baseInstoreProdCondition$
+            join base_store_prod_dis bspd on prod._id = bspd.prod_id where $funcCode$  $storeId$  $genId$ $prodBrand$    $paramsCondition$ order by prod.[seq]</string>
+	<key>queryStoreRedisBrandSortProductLocalSql</key>
+	<string>select distinct prod._id Id,prod.name,prod.cod,prod.searchcod,prod.pTyp,prod.brand,prod.barcode barcod,prod.price,
+            prod.url,prod.seq,prod.addproduct_json_data,prod.blockPrice,prod.regex,prod.pack,prod.size,prod.series,prod.serverCode,prod.memo1,prod.memo2,prod.memo3,prod.memo4,prod.expirydate,prod.pinyin,prod.barcode2
+            from base_product prod  join base_in_store_prod bisd  on  prod._id = bisd.prod_id   $baseInstoreProdCondition$
+            join wch_product wchp on prod._id = wchp.PROD_ID where $idx$ $prodBrand$    $paramsCondition$ order by wchp.[ID]</string>
+	<key>queryOutPlanVisitingAndVisitedStoresSql</key>
+	<string>select distinct store.[store_Id] Id, status.[emp_id] ,store.[name], store.[custCode], store.[code], store.[styp], store.[sv], store.[phone],
+            store.dist_rule_id drId, status.[is_plan],ifnull(status.[status],0) actionState,  store.[addr], store.[lvlcode],
+            store.[lon] longitude ,store.[lat] latitude,status.[func_code] ,bf.[fv] as order_id,(case when acvtdis.answer is not null then  acvtdis.answer else locacvtdis.answer end) as storeImg,
+            wis.local_image as local_ImageID,wis.INTIME as inTime,wis.OUTTIME as outTime,attribute.acvt_qst_answer as attri ,store_month_visit_timeDis.acvt_qst_answer as store_month_visit_time,
+            store.[storesFilter],store.[state],store.[last_man],store.[last_date],store.[distances] distance,store.[row_number],
+            store.state,item_name,department_id as departmentId, store.ctyp ,storeStatus.optName,storeStatus1.monthVisitNumber,storeStatus2.monthHelpVisitNumber,localOrangeStore.answer,status.from_module as fromModuleName from ws_base_store_table store
+            left join base_funcs bf on bf.opt like &apos;%%isOrder%%&apos; and fc in (select func_code from visit_store_action where store_id=store.store_Id)
+            left join visit_store_status status on store.store_Id = status.store_id $funcCode$
+            left join wch_inoutStore wis on wis.store_id = store.store_Id and wis.emp_id = store.empId and wis.modulefc = status.func_code
+            left join (select bsad.acvt_qst_answer as answer, bsad.sid as sid from base_store_acvt_dis bsad
+            join base_acvt_qst baq on baq.acvtId = bsad.acvtId and baq.acvtQstId = bsad.acvtQstId where baq.qstCod=&apos;smallImgUrl&apos;) acvtdis on acvtdis.sid = store.store_Id
+            left join (select vsad.acvt_qst_answer as answer, vsad.gen_id as gen_id ,vsad.emp_id as empid from visit_store_acvt_data vsad
+            join base_acvt_qst baq on baq.acvtId = vsad.acvtId and baq.acvtQstId = vsad.acvtQstId
+            where baq.isAcvtName =&apos;9&apos; and baq.qstType = &apos;P&apos;) locacvtdis on locacvtdis.gen_id = store.acvt_genId
+            left join( select distinct acvt_qst_answer,baq.qstName,bsad.sid from base_store_acvt_dis bsad
+            join base_acvt ba on ba._id=bsad.acvtId and ba.acvtCode=&apos;store_attribute_icon&apos;
+            join base_acvt_qst baq on baq.acvtId=ba._id and baq._id=bsad.acvtQstId )attribute on attribute.sid=store.store_Id
+            left join( select distinct acvt_qst_answer,baq.qstName,bsad.sid from base_store_acvt_dis bsad
+            join base_acvt ba on ba._id=bsad.acvtId and ba.acvtCode=&apos;store_msg&apos;
+            join base_acvt_qst baq on baq.acvtId=ba._id and baq._id=bsad.acvtQstId )store_month_visit_timeDis on store_month_visit_timeDis.sid=store.store_Id
+            left join (SELECT sid,GROUP_CONCAT(optName) as optName FROM (select acvt_qst_answer,opt.optName optName,bsad.sid from base_store_acvt_dis bsad
+            join base_acvt ba on ba._id=bsad.acvtId and ba.acvtCode=&apos;searchStore&apos;
+            join base_acvt_qst baq on baq.qsttype=&apos;DB&apos; and baq.acvtId=ba._id and baq._id=bsad.acvtQstId
+            join base_acvt_qst_opt opt on baq.acvtQstid = opt.acvtQstId and opt._id = bsad.acvt_qst_answer) GROUP BY sid) storeStatus on storeStatus.sid=store.store_Id
+            left join (select bsad.acvt_qst_answer as answer, bsad.sid from  visit_store_acvt_data bsad
+            join base_acvt_qst baq on baq.acvtId = bsad.acvtId and baq._id = bsad.acvtQstId and  baq.isAcvtName=&apos;17&apos; ) localOrangeStore on localOrangeStore.sid=store.store_Id
+            left join (SELECT sid,acvt_qst_answer as monthVisitNumber FROM (select acvt_qst_answer,bsad.sid from base_store_acvt_dis bsad
+                        join base_acvt ba on ba._id=bsad.acvtId and ba.acvtCode=&apos;searchStore&apos;
+                        join base_acvt_qst baq on baq.qstCod = &apos;byybf_bq&apos;  and baq.acvtId=ba._id and baq._id=bsad.acvtQstId) GROUP BY sid) storeStatus1 on storeStatus1.sid=store.store_Id
+            left join (SELECT sid,acvt_qst_answer as monthHelpVisitNumber FROM (select acvt_qst_answer,bsad.sid from base_store_acvt_dis bsad
+                    join base_acvt ba on ba._id=bsad.acvtId and ba.acvtCode=&apos;searchStore&apos;
+                    join base_acvt_qst baq on baq.qstCod = &apos;byyzx_bq&apos;  and baq.acvtId=ba._id and baq._id=bsad.acvtQstId) GROUP BY sid) storeStatus2 on storeStatus2.sid=store.store_Id
+            where  $storeEmpId$  $statusEmpId$ and status.[status] in(1,2) $search_objId$ and store.store_Id
+            not in ( select bsv.store_id from ws_base_store_visitplan bsv where $bsvBiz_date$ $bsvEmpId$ and bsv.store_id is not null)
+            group by store.[store_Id]  order by ifnull(status.[status],0), store.ID,cast(store.[seq] as int)</string>
+	<key>notFillAcvtQuerySql</key>
+	<string>select a.acvtName acvtName, a.funcsName funcsName from (
+            select ba.acvtName,  va.[store_id], func.name as funcsName from base_acvt ba
+            join base_store_acvt bsa on $bsaStoreId$ and bsa.acvtId=ba._id and  ba.[isReq]=&apos;1&apos;
+            join (select filter,b.name from base_funcs b join(select subCode from base_funcs where $parentId$ $storeTypeWhere$) a  on b.subCode like a.subCode ||&apos;%&apos; and fv=&apos;V20A01&apos; ) func on func.filter=ba.typ
+            left join  visit_store_acvt va on ba.[_id]=va.acvt_id  $vaStoreId$  $emp_id$
+            )a
+            where a.store_id is null</string>
+	<key>notFillFuncsQuerySql</key>
+	<string>select a.name, a.status, a.fc,a.fv,a.ds from (
+            select func.name, vsa.status , func.fc , func.fv,func.ds, vsa.is_required, vsa.dict_id
+            FROM base_funcs func
+            left join visit_store_action vsa on func.fc=vsa.func_code  and vsa.store_id=&apos;$storeId$&apos;
+            where func.subCode like (select  subCode from base_funcs  where _id= &apos;$funcsId$&apos; ) ||&apos;%&apos;
+            and func.required=&apos;R&apos; and func.fv&lt;&gt;&apos;V20S99&apos; and func.fv &lt;&gt; &apos;V20S01&apos;
+            $func_styp$  and vsa.emp_id = &apos;$emp_id$&apos; ) a
+            where a.status is null or a.status &lt;&gt; &apos;1&apos; and a.is_required = &apos;R&apos; and a.dict_id is null</string>
+	<key>searchServerAcvtData</key>
+	<string>select  distinct acvt_dis.gen_id genId, ifnull(acvt_dis.opt_value,acvt_dis.acvt_qst_answer) answer,
+            acvt.isacvtname isacvtname, acvt.qsttype qsttype,acvt_dis.acvtId acvtId,acvt_dis.acvtQstId acvtQstId,
+            acvt.qstName qstName, acvt.countrule countrule,acvt_dis.getTime getTime,
+            acvt_dis.acvt_qst_answer acvtanswer ,storeStatus.status status, acvt_dis.newStoreId newstoreid,
+            store.name storeName, store.code storeCode, store.store_Id storeId
+            from base_store_acvt_dis acvt_dis
+            left join ws_base_store_table store on store.acvt_genId = acvt_dis.gen_id
+            left join visit_store_status storeStatus on acvt_dis.newStoreId = storeStatus.store_id
+            join (
+            select acvt._id acvtId, acvt_qst._id acvtQstId, acvt_qst.isAcvtName isacvtname, acvt_qst.qsttype qsttype,
+            acvt_qst._id acvtQstId,acvt_qst.seq,acvt_qst.qstName,acvt_qst.countrule
+            from base_acvt acvt
+            join base_acvt_qst acvt_qst on acvt._id=acvt_qst.acvtId  and acvt.typ=?
+            )acvt on acvt_dis.acvtId=acvt.acvtId and acvt_dis.acvtQstId=acvt.acvtQstId
+            join (
+            select gen_id, seq from (
+            SELECT gen_id,GROUP_CONCAT(ifnull(opt_value,acvt_qst_answer)) answer, min(_id) seq
+            FROM base_store_acvt_dis
+            GROUP BY gen_id
+            ) where 1=1  $optNamelike$          --and (answer like &apos;%宝%&apos;)
+            ) likeResult on likeResult.gen_id=acvt_dis.gen_id
+            where 1=1   $storeIdWhere$    --and acvt_dis.sid is not null
+            $isSearchWhere$                 --and acvt_dis.is_search is null
+            $genIdWhere$             --and acvt_dis.gen_id is not null
+            $empIdWhere$
+            order by likeResult.seq,acvt.seq</string>
+	<key>searchLocalAcvtData</key>
+	<string>select distinct acvt_dis.gen_id genId, ifnull(acvt_dis.opt_value,acvt_dis.acvt_qst_answer) answer, acvt.isacvtname isacvtname,
+            acvt.qsttype qsttype,acvt_dis.acvtId acvtId,acvt_dis.acvtQstId acvtQstId, acvt.qstName qstName, acvt.countrule countrule,
+            acvt_dis.acvt_qst_answer acvtanswer,storeStatus.status status, acvt_dis.newStoreId newstoreid,
+            store.name storeName, store.code storeCode, store.store_Id storeId
+            from visit_store_acvt_data acvt_dis
+            left join ws_base_store_table store on store.acvt_genId = acvt_dis.gen_id
+            left join visit_store_status storeStatus on store.store_Id = storeStatus.store_id and storeStatus.store_id is not null
+            join (
+            select acvt._id acvtId, acvt_qst._id acvtQstId, acvt_qst.isAcvtName isacvtname, acvt_qst.qsttype qsttype,
+            acvt_qst.qsttype||acvt_qst._id typeAcvtQstId,acvt_qst.seq,acvt_qst.qstName,acvt_qst.countrule
+            from base_acvt acvt
+            join base_acvt_qst acvt_qst on acvt._id=acvt_qst.acvtId  and acvt.typ=?
+            )acvt on acvt_dis.acvtId=acvt.acvtId and (acvt_dis.acvtQstId=acvt.acvtQstId or acvt_dis.acvtQstId =acvt.qsttype||acvt.acvtQstId)
+            join (
+            select gen_id, seq from (
+            SELECT gen_id,GROUP_CONCAT(ifnull(opt_value,acvt_qst_answer)) answer, min(_id) seq
+            FROM visit_store_acvt_data
+            GROUP BY gen_id
+            ) where 1=1   $optNamelike$    --and (answer like &apos;%宝%&apos;)
+            ) likeResult on likeResult.gen_id=acvt_dis.gen_id
+            where 1=1 $storeIdWhere$ $empIdWhere$ $genIdWhere$
+            order by likeResult.seq desc,acvt.seq</string>
+	<key>serverAcvtDataOptIsNull</key>
+	<string>select acvt_dis._id id , acvt_dis.acvt_qst_answer acvt_qst_answer, acvt.ds ds, acvt.filter filter, acvt.acvtQstId acvtQstId
+            from base_store_acvt_dis acvt_dis
+            join (
+            select acvt._id acvtId, acvt_qst._id acvtQstId,  acvt_qst.ds ds ,acvt_qst.filter filter
+            from base_acvt acvt
+            join base_acvt_qst acvt_qst on acvt._id=acvt_qst.acvtId and (acvt_qst.qsttype in( &apos;R&apos;,&apos;RD&apos;,&apos;C&apos;,&apos;CN&apos;,&apos;CD&apos;,&apos;SS&apos;,&apos;DV&apos;,&apos;SM&apos;,&apos;DM&apos;,&apos;CQ&apos;))
+            )acvt on acvt_dis.acvtId=acvt.acvtId and acvt_dis.acvtQstId=acvt.acvtQstId
+            where gen_id is not null and acvt_dis.opt_value is null</string>
+	<key>getMenuNoticeNum1</key>
+	<string>select acvtdis.sid, funcs.fc, sum(length(acvtdis.acvt_qst_answer)-length(replace(acvtdis.acvt_qst_answer,&apos;,&apos;,&apos;&apos;))+1) totalNum
+            from base_acvt acvt
+            join base_acvt_qst acvtqst on acvt._id=acvtqst.acvtId and acvtqst.qsttype=&apos;AN&apos;
+            join base_store_acvt_dis acvtdis on acvtdis.acvtId=acvt._id and acvtdis.acvtQstId=acvtqst._id
+            join base_funcs funcs on funcs.filter=acvt.typ and funcs.ds=&apos;acvt&apos; and funcs.opt like &apos;%isRead = 4%&apos;
+            group by funcs.fc,acvtdis.sid</string>
+	<key>getAddAcvtCount</key>
+	<string>select distinct func_acvt.fc fc, acvt_dis.gen_id genId, acvt_dis.acvt_qst_answer = qst.countrule compare
+            from base_store_acvt_dis acvt_dis
+            join (
+            select a.fc fc, b.filter filter, acvt._id acvtId
+            from (SELECT fc,fv,subCode FROM BASE_funcs where $fcWhere$) a
+            join (
+            select filter,subCode from base_funcs where opt like &apos;%isRead = 1%&apos; and opt  like &apos;%isAdd = %&apos;
+            ) b on b.subCode like a.subCode ||&apos;%&apos;
+            join base_acvt acvt on acvt.typ = b.filter
+            ) func_acvt on acvt_dis.acvtId=func_acvt.acvtId
+            join base_acvt_qst qst on qst.acvtId = acvt_dis.acvtId and qst._id=acvt_dis.acvtQstId
+            where qst.countrule is not null
+            
+            union all
+            
+            select distinct func_acvt.fc fc, acvt_dis.gen_id genId, acvt_dis.acvt_qst_answer = qst.countrule compare
+            from visit_store_acvt_data acvt_dis
+            join (
+            select a.fc fc, b.filter filter, acvt._id acvtId
+            from  (SELECT fc,fv,subCode FROM BASE_funcs where $fcWhere$) a
+            join (
+            select filter,subCode from base_funcs where opt like &apos;%isRead = 1%&apos; and opt  like &apos;%isAdd = %&apos;
+            ) b on b.subCode like a.subCode ||&apos;%&apos;
+            join base_acvt acvt on acvt.typ = b.filter
+            ) func_acvt on acvt_dis.acvtId=func_acvt.acvtId
+            join base_acvt_qst qst on qst.acvtId = acvt_dis.acvtId and qst._id=acvt_dis.acvtQstId
+            where qst.countrule is not null </string>
+	<key>localAcvtDataOptIsNull</key>
+	<string>select acvt_dis._id id, acvt_dis.acvt_qst_answer acvt_qst_answer, acvt.ds ds, acvt.filter filter, acvt.acvtQstId acvtQstId
+            from visit_store_acvt_data acvt_dis
+            join (
+            select acvt._id acvtId, acvt_qst._id acvtQstId,  acvt_qst.ds ds ,acvt_qst.filter filter
+            from base_acvt acvt
+            join base_acvt_qst acvt_qst on acvt._id=acvt_qst.acvtId and (acvt_qst.qsttype in( &apos;R&apos;,&apos;RD&apos;,&apos;C&apos;,&apos;CN&apos;,&apos;CD&apos;,&apos;SS&apos;,&apos;DV&apos;,&apos;SM&apos;,&apos;DM&apos;,&apos;CQ&apos;))
+            )acvt on acvt_dis.acvtId=acvt.acvtId and acvt_dis.acvtQstId=acvt.acvtQstId
+            where gen_id is not null and acvt_dis.opt_value is null</string>
+	<key>getLocalAcvtData</key>
+	<string>select distinct acvt_dis.gen_id genId, ifnull(acvt_dis.opt_value,acvt_dis.acvt_qst_answer) answer, acvt.isacvtname isacvtname,
+            acvt.qsttype qsttype,acvt_dis.acvtId acvtId, acvt.qstName qstName, acvt.countrule countrule,
+            acvt_dis.acvt_qst_answer acvtanswer,acvt.acvtQstId acvtQstId, acvt.qstCod qstCode
+            from visit_store_acvt_data acvt_dis
+            left join (
+            select acvt._id acvtId, acvt_qst._id acvtQstId, acvt_qst.isAcvtName isacvtname, acvt_qst.qsttype qsttype,
+            acvt_qst.qsttype||acvt_qst._id typeAcvtQstId,acvt_qst.seq,acvt_qst.qstName,acvt_qst.countrule,acvt_qst.qstCod
+            from base_acvt acvt
+            join base_acvt_qst acvt_qst on acvt._id=acvt_qst.acvtId
+            )acvt on acvt_dis.acvtId=acvt.acvtId and acvt_dis.acvtQstId=acvt.acvtQstId
+            where 1=1 $acvtIdWhere$ $storeIdWhere$ $genIdWhere$ $empIdWhere$</string>
+	<key>getServerAcvtData</key>
+	<string>select  distinct acvt_dis.gen_id genId, ifnull(acvt_dis.opt_value,acvt_dis.acvt_qst_answer) answer,
+            acvt.isacvtname isacvtname, acvt.qsttype qsttype,acvt_dis.acvtId acvtId,
+            acvt.qstName qstName, acvt.countrule countrule,acvt_dis.getTime getTime,
+            acvt_dis.acvt_qst_answer acvtanswer , acvt_dis.newstoreid newstoreid,
+            acvt.acvtQstId acvtQstId, acvt.qstCod qstCode
+            from base_store_acvt_dis acvt_dis
+            left join (
+            select acvt._id acvtId, acvt_qst._id acvtQstId, acvt_qst.isAcvtName isacvtname, acvt_qst.qsttype qsttype,
+            acvt_qst._id acvtQstId,acvt_qst.seq,acvt_qst.qstName,acvt_qst.countrule,acvt_qst.qstCod
+            from base_acvt acvt
+            join base_acvt_qst acvt_qst on acvt._id=acvt_qst.acvtId
+            )acvt on acvt_dis.acvtId=acvt.acvtId and acvt_dis.acvtQstId=acvt.acvtQstId
+            where 1=1 $acvtIdWhere$ $storeIdWhere$ $genIdWhere$ $empIdWhere$</string>
+	<key>queryDVDataSourceStoresSql</key>
+	<string>select store.[store_Id] Id, store.[empId], store.[name],  store.[custCode],
+            
+            store.[code], store.[styp], store.[sv], store.dist_rule_id drId,
+            
+            store.[addr],store.[lon] longitude,store.[lat] latitude,
+            
+            store.[store_other_col],store.[phone],store.[detail_info] ,store.search_objId noteName,
+            
+            store.[storesFilter],store.[state] ,store.[last_man],store.[last_date],store.[distances] distance,store.[row_number], store.pid,item_name,department_id as departmentId from ws_base_store_table store  where 1 = 1  $empIdWhere$ $filterWhere$ $search_objIdWhere$ $pidWhere$ order by departmentId</string>
+	<key>allModifyStoreInfo</key>
+	<string>select store.[store_Id] Id, store.[empId], store.[name], store.[custCode], store.[code], store.[seq],store.[styp], store.[sv], store.[follow], store.dist_rule_id drId,
+            (case when bsv.biz_date is not null then 1 else 0 end) as  plan, store.[addr],store.[lon] longitude,store.[lat] latitude,bsv.[biz_date] as biz_date,
+            store.[store_other_col],(case when acvtdis.answer is not null then  acvtdis.answer else locacvtdis.answer end) as storeImg,store.[phone],store.[detail_info] ,
+            attribute.acvt_qst_answer attri,store.[storesFilter],store.[state] ,store.[last_man],store.[last_date],store.[distances] distance,store.[row_number],store.[acvt_genId] acvt_genId,case when status.[status]=2 then 0 when status.[status]=1 then 2 else 1 end as actionStateSeq from ws_base_store_table store
+            left join visit_store_status status on
+            store.store_Id=status.store_id and store.empId=status.emp_id $func_code$
+            left join ws_base_store_visitplan bsv on bsv.store_id=store.store_Id and bsv.biz_date =  &apos;$biz_date$&apos; and bsv.emp_id= store.[empId]
+            left join (select bsad.acvt_qst_answer as answer, bsad.sid as sid ,bsad.emp_id as empid from base_store_acvt_dis bsad
+            join base_acvt_qst baq on baq.acvtId = bsad.acvtId and baq.acvtQstId = bsad.acvtQstId
+            where baq.qstCod=&apos;smallImgUrl&apos;)acvtdis on acvtdis.sid = store.store_Id and acvtdis.empid =  &apos;$empId$&apos;
+            left join (select vsad.acvt_qst_answer as answer, vsad.gen_id as gen_id ,vsad.emp_id as empid from visit_store_acvt_data vsad
+            join base_acvt_qst baq on baq.acvtId = vsad.acvtId and baq.acvtQstId = vsad.acvtQstId
+            where baq.isAcvtName =&apos;9&apos; and baq.qstType = &apos;P&apos;) locacvtdis on locacvtdis.gen_id = store.acvt_genId and locacvtdis.empid = &apos;$empId$&apos;
+            left join( select distinct acvt_qst_answer,baq.qstName ,bsad.sid from base_store_acvt_dis bsad
+            join base_acvt ba on ba._id=bsad.acvtId and ba.acvtCode=&apos;store_attribute_icon&apos; join base_acvt_qst baq
+            on baq.acvtId=ba._id and baq._id=bsad.acvtQstId) attribute on attribute.sid=store.store_Id
+            $acvtSearchCondition$
+            where store.[empId]= &apos;$empId$&apos; $inSearchObjStr$ $likeStypStr$ $nameOrCodeSearch$ $isVisited$ $searchStoreId$  group by store.[store_Id] order by  actionStateSeq, $distanceSeq$  store.ID, cast(store.[seq] as int) $limit$</string>
+	<key>queryRedisBrandSortProductWithoutDistributionRulesSql</key>
+	<string>prod.url,prod.seq,prod.addproduct_json_data,prod.blockPrice,prod.regex,prod.pack,prod.size,prod.series,prod.serverCode,prod.memo1,prod.memo2,prod.memo3,prod.expirydate,prod.memo4,prod.pinyin
+            from base_product prod join base_store_prod_dis bspd on prod._id = bspd.prod_id where $funcCode$  $storeId$  $genId$ $prodBrand$    $paramsCondition$ order by prod.[seq]</string>
+	<key>processAcvtQstLuaScript</key>
+	<string>update base_acvt_qst
+            set Js = (select luaText
+            from base_acvt
+            where _id = base_acvt_qst.acvtId and luaText is not null)
+            where isAcvtLua = &quot;1&quot;</string>
+	<key>queryRoutePlanStore</key>
+	<string>select distinct store.store_Id Id, store.empId, store.name,last_date,last_man,store.code, store.styp, store.sv,store.dist_rule_id drId,
+            (1) as  isRouteStore, ifnull(status.[status],0) as actionState ,store.addr,store.lon longitude,store.lat
+            latitude,store.search_objId as noteName,acvtdis.answer as storeImg,wis.local_image as local_ImageID,wis.INTIME as inTime,wis.OUTTIME as outTime,attribute.acvt_qst_answer attri, acvtdiszb.answer as prepareState,
+            store_month_visit_timeDis.answer as store_month_visit_time,store.[storesFilter],store.[state],store.[last_man],store.[last_date],store.[distances] distance,store.[row_number],
+            store.state,item_name,department_id as departmentId from ws_base_store_table store
+            left join base_funcs bf on bf.opt like &apos;%%isOrder%%&apos; and fc in (select func_code from visit_store_action where store_id=store.store_Id)
+            join base_store_other_data bsod on bsod.item2 = store.store_Id  and bsod.item1 = $routeId$
+            left join visit_store_status status on store.store_Id=status.store_id  and status.[func_code] = $funcCode$
+            left join wch_inoutStore wis on wis.store_id = store.store_Id and wis.emp_id = store.empId and wis.modulefc = status.func_code
+            left join (select bsad.acvt_qst_answer as answer, bsad.sid as sid ,bsad.emp_id as empid from base_store_acvt_dis bsad
+            join base_acvt_qst baq on baq.acvtId = bsad.acvtId and baq.acvtQstId = bsad.acvtQstId
+            where baq.qstCod=&apos;smallImgUrl&apos;)acvtdis on acvtdis.sid = store.store_Id and acvtdis.empid = $empId$
+            left join (select bsad.acvt_qst_answer as answer, bsad.sid as sid ,bsad.emp_id as empid from base_store_acvt_dis bsad
+            join base_acvt_qst baq on baq.acvtId = bsad.acvtId and baq.acvtQstId = bsad.acvtQstId
+            where baq.qstCod=&apos;stores_zbzt&apos;)acvtdiszb on acvtdiszb.sid = store.store_Id and acvtdiszb.empid = $empId$
+            left join (select bsad.acvt_qst_answer as answer, bsad.sid as sid ,bsad.emp_id as empid from base_store_acvt_dis bsad
+            join base_acvt_qst baq on baq.acvtId = bsad.acvtId and baq.acvtQstId = bsad.acvtQstId
+            where baq.qstCod=&apos;last_num&apos;)store_month_visit_timeDis on store_month_visit_timeDis.sid = store.store_Id and store_month_visit_timeDis.empid = $empId$
+            left join( select distinct acvt_qst_answer,baq.qstName,bsad.sid from
+            base_store_acvt_dis bsad join base_acvt ba on ba._id=bsad.acvtId and ba.acvtCode=&apos;store_attribute_icon&apos;
+            join base_acvt_qst baq on baq.acvtId=ba._id and baq._id=bsad.acvtQstId) attribute on attribute.sid=store.store_Id
+            where 1=1 $inSearchObjStr$ $inStypStr$
+            order by ifnull(status.[status],1), cast(bsod.item3  as int)</string>
+	<key>checkSameAcvtDisSql</key>
+	<string>select distinct acvt_dis.gen_id genId, ifnull(acvt_dis.opt_value,acvt_dis.acvt_qst_answer) answer, acvt.isacvtname isacvtname,
+            acvt.qsttype qsttype,acvt_dis.acvtId acvtId,acvt_dis.acvtQstId acvtQstId, acvt.qstName qstName, acvt.countrule countrule,
+            acvt_dis.acvt_qst_answer acvtanswer, acvt_dis.newStoreId newstoreid
+            from visit_store_acvt_data acvt_dis
+            join (
+            select acvt._id acvtId, acvt_qst._id acvtQstId, acvt_qst.isAcvtName isacvtname, acvt_qst.qsttype qsttype,
+            acvt_qst.qsttype||acvt_qst._id typeAcvtQstId,acvt_qst.seq,acvt_qst.qstName,acvt_qst.countrule
+            from base_acvt acvt
+            join base_acvt_qst acvt_qst on acvt._id=acvt_qst.acvtId  and acvt.typ=?
+            )acvt on acvt_dis.acvtId=acvt.acvtId and (acvt_dis.acvtQstId=acvt.acvtQstId or acvt_dis.acvtQstId =acvt.qsttype||acvt.acvtQstId) $optNamelike$ $storeIdWhere$ $empIdWhere$</string>
+	<key>getAcvtUploadTime</key>
+	<string>select qst.[acvtId],qst.[color], qst.[memo], ifnull(ldis.[acvt_qst_answer],dis.[acvt_qst_answer]) as defaultValue from base_acvt_qst qst
+            left join visit_store_acvt_data ldis on ldis.[acvtQstId] = qst.[_id] $lempId$ $lstore$
+            left join base_store_acvt_dis dis on dis.[acvtQstId] = qst.[_id] $sempId$ $sstore$
+            where qst.qstCod =&apos;lastUploadTime&apos;group by qst.[acvtId],defaultValue</string>
+	<key>getMenuNoticeNum2</key>
+	<string>select acvtdis.sid, funcs.fc, count(distinct acvtdis.gen_id) totalNum
+            from base_acvt acvt
+            join base_store_acvt_dis acvtdis on acvtdis.acvtId=acvt._id and acvtdis.acvt_qst_answer=&apos;jxz&apos;
+            join base_acvt_qst acvtqst on acvtdis.acvtQstId=acvtqst._id and acvtqst.qstCod=&apos;hd_jxzt&apos;
+            join base_funcs funcs on funcs.filter=acvt.typ and funcs.ds=&apos;acvt&apos;and funcs.opt like &apos;%isRead = 3%&apos;
+            group by acvtdis.sid, funcs.fc</string>
+	<key>getMenuNoticeNum3</key>
+	<string>select store_acvt.sid,funcs.fc, count(1) totalNum from base_acvt acvt
+            join base_funcs funcs on funcs.filter=acvt.typ and funcs.opt like &apos;%isRead = 2%&apos;
+            join base_store_acvt store_acvt on store_acvt.acvtId=acvt._id
+            group by store_acvt.sid,funcs.fc</string>
+	<key>updateAcvtDisOptValueDictsSql</key>
+	<string>REPLACE INTO base_store_acvt_dis(_id, sid, acvtId, acvtQstId, acvt_qst_answer, gen_id, assetId, opt_value, is_search, newStoreId, server_node, emp_id, getTime)
+            select dis._id, dis.sid, dis.acvtId, dis.acvtQstId, dis.acvt_qst_answer, dis.gen_id, dis.assetId, dict.name, dis.is_search, dis.newStoreId, dis.server_node, dis.emp_id, dis.getTime
+            from base_acvt_qst qst
+            join base_store_acvt_dis dis on dis.acvtId = qst.acvtid and dis.acvtqstid = qst._id
+            join base_dicts dict on dict._id = dis.acvt_qst_answer
+            where qst.ds = &apos;dicts&apos; and dis.opt_value is null</string>
+	<key>updateAcvtDisOptValueStoreSql</key>
+	<string>REPLACE INTO base_store_acvt_dis(_id, sid, acvtId, acvtQstId, acvt_qst_answer, gen_id, assetId, opt_value, is_search, newStoreId, server_node, emp_id, getTime)
+            select dis._id, dis.sid, dis.acvtId, dis.acvtQstId, dis.acvt_qst_answer, dis.gen_id, dis.assetId, store.name, dis.is_search, dis.newStoreId, dis.server_node, dis.emp_id, dis.getTime
+            from base_acvt_qst qst
+            join base_store_acvt_dis dis on dis.acvtId = qst.acvtid and dis.acvtqstid = qst._id
+            join ws_base_store_table store on store.store_id = dis.acvt_qst_answer
+            where qst.ds = &apos;store&apos; and dis.opt_value is null</string>
+	<key>updateAcvtDisOptValueEmpSql</key>
+	<string>REPLACE INTO base_store_acvt_dis(_id, sid, acvtId, acvtQstId, acvt_qst_answer, gen_id, assetId, opt_value, is_search, newStoreId, server_node, emp_id, getTime)
+            select dis._id, dis.sid, dis.acvtId, dis.acvtQstId, dis.acvt_qst_answer, dis.gen_id, dis.assetId, emp.name, dis.is_search, dis.newStoreId, dis.server_node, dis.emp_id, dis.getTime
+            from base_acvt_qst qst
+            join base_store_acvt_dis dis on dis.acvtId = qst.acvtid and dis.acvtqstid = qst._id
+            join base_emp emp on emp.emp_id = dis.acvt_qst_answer
+            where qst.ds = &apos;emp&apos; and dis.opt_value is null</string>
+	<key>updateAcvtDisOptValueProdSql</key>
+	<string>REPLACE INTO base_store_acvt_dis(_id, sid, acvtId, acvtQstId, acvt_qst_answer, gen_id, assetId, opt_value, is_search, newStoreId, server_node, emp_id, getTime)
+            select dis._id, dis.sid, dis.acvtId, dis.acvtQstId, dis.acvt_qst_answer, dis.gen_id, dis.assetId, prod.name, dis.is_search, dis.newStoreId, dis.server_node, dis.emp_id, dis.getTime
+            from base_acvt_qst qst
+            join base_store_acvt_dis dis on dis.acvtId = qst.acvtid and dis.acvtqstid = qst._id
+            join base_product prod on prod._id = dis.acvt_qst_answer
+            where qst.ds = &apos;prod&apos; and dis.opt_value is null</string>
+	<key>updateAcvtDisOptValueOptSql</key>
+	<string>REPLACE INTO base_store_acvt_dis(_id, sid, acvtId, acvtQstId, acvt_qst_answer, gen_id, assetId, opt_value, is_search, newStoreId, server_node, emp_id, getTime)
+            select dis._id, dis.sid, dis.acvtId, dis.acvtQstId, dis.acvt_qst_answer, dis.gen_id, dis.assetId, opt.optName, dis.is_search, dis.newStoreId, dis.server_node, dis.emp_id, dis.getTime
+            from base_acvt_qst qst
+            join base_store_acvt_dis dis on dis.acvtId = qst.acvtid and dis.acvtqstid = qst._id
+            join base_acvt_qst_opt opt on opt._id = dis.acvt_qst_answer
+            where dis.opt_value is null</string>
+</dict>
+</plist>

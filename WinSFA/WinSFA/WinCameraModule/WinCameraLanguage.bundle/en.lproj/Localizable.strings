@@ -1,0 +1,15 @@
+/* 
+  Localizable.strings
+  
+  Created by yuanji on 2025/11/14.
+*/
+
+"camera_prompt_title" = "prompt";
+"camera_confirm_title" = "confirm";
+"camera_cancel_title" = "cancel";
+"camera_use_title" = "use";
+"camera_error_permission" = "Please enable the permissions in order to use your Camera Check your permissions in Settings > Privacy > Camera";
+"camera_error_hardware" = "The camera device cannot be used normally. Please reopen it";
+"camera_error_switchCamera" = "Camera switching failed";
+"camera_error_takePhotoProgress" = "Processing photo, please do not click again";
+"camera_error_takePhotoConnection" = "Unable to capture image. Please try again later";

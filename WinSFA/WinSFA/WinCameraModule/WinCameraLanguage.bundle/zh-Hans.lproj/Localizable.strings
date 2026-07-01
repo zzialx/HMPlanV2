@@ -1,0 +1,15 @@
+/* 
+  Localizable.strings
+  
+  Created by yuanji on 2025/11/14.
+*/
+
+"camera_prompt_title" = "提示";
+"camera_confirm_title" = "确定";
+"camera_cancel_title" = "取消";
+"camera_use_title" = "使用";
+"camera_error_permission" = "需要授权才能使用摄像头 请检查你的权限设置 设置 > 隐私 > 相机";
+"camera_error_hardware" = "相机设备不能正常使用 请重新打开";
+"camera_error_switchCamera" = "摄像头切换失败";
+"camera_error_takePhotoProgress" = "正在处理拍照 请勿重复点击";
+"camera_error_takePhotoConnection" = "拍照无法成像 请稍后重试";

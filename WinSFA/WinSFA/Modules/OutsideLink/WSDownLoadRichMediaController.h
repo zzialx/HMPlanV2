@@ -1,0 +1,14 @@
+//
+//  WSDownLoadRichMediaController.h
+//  WinSFA
+//
+//  Created by huzepei on 16/8/25.
+//  Copyright © 2016年 WinChannel. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+#import "WCBaseViewController.h"
+
+@interface WSDownLoadRichMediaController : WCBaseViewController
+
+@end

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>spe_richMedia_otherinfo</key>
+	<string>INSERT INTO spe_richMedia_otherinfo (sid,speid,click_time,biz_date,emp_id) VALUES (?,?,?,?,?);</string>
+	<key>suggest_list</key>
+	<string>INSERT INTO suggest_list (name,type,item,sid,empid,biz_date) VALUES (?,?,?,?,?,?);</string>
+	<key>spe_richMedia_template</key>
+	<string>INSERT INTO spe_richMedia_template (pid,type,name,item,storeID,storeName,visitName,sid) VALUES (?,?,?,?,?,?,?,?);</string>
+	<key>spe_richMedia</key>
+	<string>INSERT INTO spe_richMedia (speid,cod,typ,memo,img_url,h5_url,seq,levelCode,name,isread,clicktime,share_url,type_,fenleiId, img_add, h5_add) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);</string>
+	<key>wch_imagePath</key>
+	<string>INSERT INTO wch_imagePath (IMG_IDX,IMG_PATH,BIZ_DATE,UPLOAD_DATE,UPLOAD_FLAG) VALUES (?,?,?,?,?);</string>
+	<key>wch_inoutStore</key>
+	<string>INSERT INTO wch_inoutStore (STORE_ID,EMP_ID,IS_PLANED,BIZ_DATE,INTIME,OUTTIME,IMG_IDX,MEMO,UPLOAD_DATE,UPLOAD_FLAG,IN_LON,IN_LAT,OUT_LON,OUT_LAT,IN_CALLID,OUT_CALLID,SR_ID,FUNC_CODE,MEMO1, MEMO2, MEMO3,MEMO4,MEMO5,MEMO6,MEMO7,MEMO8,MEMO9,MEMO10,VISIT_ID,modulefc,local_image,needTip) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);</string>
+	<key>wch_fpt</key>
+	<string>INSERT INTO wch_fpt (FUNC_CODE,FUNC_VIEW,IS_PLANED,ORG_ID,STORE_ID,EMP_ID,BIZ_DATE,UPLOAD_DATE,UPLOAD_FLAG,IMG_IDX,SR_ID,MEMO,MEMO1,MEMO2,MEMO3,MEMO4,MEMO5,MEMO6,MEMO7,MEMO8,MEMO9,MEMO10, TITLE) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);</string>
+	<key>wch_fac</key>
+	<string>INSERT INTO wch_fac (SR_ID,ACVT_ID,EMP_ID,RSPN_ID,STORE_ID,BIZ_DATE,UPLOAD_FLAG,UPLOAD_DATE,IMG_IDX,FUNC_CODE,FUNC_VIEW,IS_PLANED,MEMO,p_gen_id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?);</string>
+	<key>wch_fdt</key>
+	<string>INSERT INTO wch_fdt (FUNC_CODE,FUNC_VIEW,IS_PLANED,ORG_ID,STORE_ID,EMP_ID,BIZ_DATE,UPLOAD_DATE,UPLOAD_FLAG,IMG_IDX,SR_ID,MEMO,MEMO1,MEMO2,MEMO3,MEMO4,MEMO5,MEMO6,MEMO7,MEMO8,MEMO9,MEMO10,TITLE) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);</string>
+	<key>wch_addStore</key>
+	<string>INSERT INTO wch_addStore (SR_ID,ACVT_ID,EMP_ID,RSPN_ID,STORE_ID,BIZ_DATE,UPLOAD_FLAG,UPLOAD_DATE,IMG_IDX,FUNC_CODE,FUNC_VIEW,IS_PLANED,MEMO, UPDATE_MD5ID, STORE_TYPE,ADD_TYPE, STORE_NAME,IS_LOCAL) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);</string>
+	<key>wch_offLineUpload</key>
+	<string>INSERT INTO wch_offLineUpload (emp_id,biz_date,upload_flag,upload_data,url,img_idx,is_photo,notify,DATA_TYPE,photo_filename) VALUES (?,?,?,?,?,?,?,?,?,?);</string>
+	<key>wch_product</key>
+	<string>INSERT INTO wch_product (IDX,PROD_ID,DIST,PRI,INV,AGING,DISP,SDISP,CMPT,OOS,MTD,ORD,GOFA,OTHERDICTS,ITEM1,ITEM2,ITEM3,ITEM4,ITEM5,ITEM6,ITEM7,ITEM8,ITEM9,ITEM10,ITEM11,ITEM12,ITEM13,ITEM14,ITEM15,ITEM16,ITEM17,ITEM18,ITEM19,ITEM20,ITEM21,ITEM22,ITEM23,ITEM24,ITEM25,ITEM26,ITEM27,ITEM28,ITEM29,ITEM30,ITEM31,ITEM32,ITEM33,ITEM34,ITEM35,ITEM36,ITEM37,ITEM38,ITEM39,ITEM40,ITEM41,ITEM42,ITEM43,ITEM44,ITEM45,ITEM46,ITEM47,ITEM48,ITEM49,ITEM50) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);</string>
+	<key>wch_facQst</key>
+	<string>INSERT INTO wch_facQst (ANS_ID,QST_ID,OPT_ID,OPT_VAL,QST_TYPE) VALUES (?,?,?,?,?); </string>
+	<key>wch_dict</key>
+	<string>INSERT INTO wch_dict (idx,dict_id,col1,col2,col3,col4,col5,col6,col7,col8,col9,col10,col11,col12) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?);</string>
+	<key>wch_addStoreQst</key>
+	<string>INSERT INTO wch_addStoreQst (ANS_ID,QST_ID,OPT_ID,OPT_VAL,QST_TYPE, TITLETYPE,newStoreId,ACVT_ID) VALUES (?,?,?,?,?,?,?,?);</string>
+	<key>wch_dbversion</key>
+	<string>INSERT INTO  wch_dbversion (VERSION,MEMO1,MEMO2) VALUES (?,?,?);</string>
+	<key>wch_addProduct</key>
+	<string>INSERT INTO wch_addProduct(SR_ID, ACVT_ID, EMP_ID, RSPN_ID, STORE_ID, PRODUCT_ID, BIZ_DATE, UPLOAD_FLAG, UPLOAD_DATE, IMG_IDX, FUNC_CODE, FUNC_VIEW, MEMO, serverRequire, UPDATE_MD5ID) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);</string>
+	<key>wch_addProductQst</key>
+	<string>INSERT INTO wch_addProductQst (ANS_ID,QST_ID,OPT_ID,OPT_VAL,QST_TYPE) VALUES (?,?,?,?,?);</string>
+	<key>visit_store_action</key>
+	<string>INSERT INTO visit_store_action (parent_action_id,store_id,func_code,biz_date,status,emp_id,dict_id,is_required,title,module_fc,newstore_id,fromModuleName) VALUES (?,?,?,?,?,?,?,?,?,?,?,?);</string>
+	<key>ws_request_data_cache</key>
+	<string>INSERT INTO ws_request_data_cache (emp_Id,biz_date,data_md5,data,reserve0,reserve1,reserve2,reserve3,reserve4,reserve5,reserve6,reserve7,reserve8,reserve9) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?);</string>
+	<key>ws_add_newAcvt</key>
+	<string>INSERT INTO ws_add_newAcvt (emp_Id,biz_date,name,upload_flag,func_code,acvt_datas,store_id,md5,acvt_id,func_view,acvt_newStoreId,islocal) VALUES (?,?,?,?,?,?,?,?,?,?,?,?);</string>
+	<key>wch_visitStorePlan</key>
+	<string>INSERT INTO wch_visitStorePlan (STOREIDS, DATE, EMPID,storeid,storestate,storestateurl) VALUES (?,?,?,?,?,?);</string>
+	<key>wch_visitPeoplePlan</key>
+	<string>INSERT INTO wch_visitPeoplePlan (DOCDATE, EMPID, SUBEMPID, SUBEMPNAME , SUBORGID, SUBORGNAME) VALUES (?,?,?,?,?,?);</string>
+	<key>wch_customTime</key>
+	<string>INSERT INTO wch_customTime (EMP_ID, STORE_ID, ENTER_STORE_FC, UPLOAD_FLAG, ENTER_DISPOSE_TIME, CUSTOM_ENTER_DATE, CUSTOM_ENTER_TIME, BIZ_DATE,MEMO2) VALUES (?,?,?,?,?,?,?,?,?);</string>
+	<key>wch_base_store_data</key>
+	<string>INSERT INTO wch_base_store_data (EMP_ID, STORE_ID, TYPE, ITEM1, ITEM2,ITEM3,ITEM4,ITEM5,ITEM6,ITEM7,ITEM8,ITEM9,ITEM10,BIZ_DATE) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?);</string>
+	<key>ws_download_file</key>
+	<string>INSERT INTO ws_download_file (empid, biz_date, acvt_id,file_id,file_name ,file_url ,file_length ,file_download_size ,file_type ,file_save_path,file_download_status,file_download_begin_time,file_download_end_time ,file_expire_time) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?);</string>
+	<key>ws_download_file_store</key>
+	<string>INSERT INTO ws_download_file_store (storeid, file_url,storetype) VALUES (?,?,?);</string>
+	<key>ws_base_store_table</key>
+	<string>INSERT INTO ws_base_store_table (store_Id,empId,name,code,styp,addr,lon,lat,seq,search_objId,search_code,lvlcode,dist_rule_id,is_plan,sv,visit_status,biz_date,addstore_json_data,store_other_col,pid,acvt_genId ,detail_info,beacon_mac,beacon_uuid,linkman,phone,storesFilter,state,last_man,last_date,distances,row_number,item_name,department_id,pinyin,follow,cityId,qrcode,ctyp,custCode,orgId) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);</string>
+	<key>ws_base_store_visitplan</key>
+	<string>INSERT INTO ws_base_store_visitplan (emp_id,store_id,biz_date,seq) VALUES (?,?,?,?);</string>
+	<key>base_store_other_data</key>
+	<string>INSERT INTO base_store_other_data (emp_id,store_id,type,item1,item2,item3,item4,item5,item6,item7,item8,item9,item10,biz_date,item11,item12,item13,item14,item15,item16,item17,item18,item19,item20) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);</string>
+	<key>base_store_acvt</key>
+	<string>INSERT INTO base_store_acvt(sid,acvtId,uploadCount,hasUploadedCount, server_node) values (?,?,?,?,?);</string>
+	<key>base_acvt</key>
+	<string>INSERT INTO base_acvt (_id, acvtName,acvtObj ,typ ,s , seq , isblock , originalAcvtId , isReq , ispreview , ftext , acvtCode , organization , publisher, server_node,acvtIconUrl,luaText) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);</string>
+	<key>base_acvt_qst</key>
+	<string>INSERT INTO base_acvt_qst (_id,is_req,readonly,acvtId,qstId,qstName,qstDesc,qsttype,mlen,dlen,mnum,snum, seq, acvtQstId, qstCod, ds, filter, parent, color, bgColor, groupName, mc, isDefaultClick, isAcvtName, defaultValue, acvtNestedId, func, alertTitle, parentQstId, orientation, ishidden, Js, countrule, isallowadd, hint, charNum, redis, Value, isMutex, dependon, REG, tip, buttonname, align, is_not_water_mark,qstIconUrl , memo,  memo1, memo2, memo3 ,memo4 ,checkType,tab,hideQstName,hideQstOptName,maxPhoto,server_node,isSupperLocalPhoto,displayMode,hiddenBottomline,widthPercent,isCoverNewId,isAcvtLua,locationType,verticalGroupName,layout_gravity,titleReadColor,valueReadColor,valueColor,titleSize,valueSize) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)</string>
+	<key>base_acvt_qst_opt</key>
+	<string>insert into base_acvt_qst_opt (_id,acvtQstId,optName,optPic, seq,server_node) values(?,?,?,?,?,?);</string>
+	<key>base_product</key>
+	<string>insert into base_product (_id,name,cod,searchcod,pTyp,brand,barcode,price, url, seq, addproduct_json_data, blockPrice, regex, pack, size, series, serverCode ,memo1, memo2,memo3,memo4,prodtrees,pinyin,expirydate,bigage,memo) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);</string>
+	<key>base_funcs</key>
+	<string>insert into base_funcs (_id ,parentId,userId,fc,fv,name,required,typ,opt,ds,filter,wfcol,param,other,dateTyp,styp,isAcvtList,readonly,lockCol,sort,levelCode, submenu, unredo, storeinfo, defaultinfo, redis, sqlw, datasource, maxRow, buttonName, sql, tabparam, Value, FcharNum, icon, nullvalue, subCode, android, script, hiddenEmpty,menuType,menuStyle,noticeNumFc) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);</string>
+	<key>base_dicts</key>
+	<string>insert into base_dicts (_id ,pid,name,typ,dtyp,btyp, col1, col2, cod, dicts_sequence, levelCode, regex, server_node,SEQ,fl,iconUrl) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);</string>
+	<key>base_msg_type</key>
+	<string>insert into  base_msg_type (_id,name,cod,msg_amount, msg_sequence, type,icon_url,sort) values(?,?,?,?,?,?,?,?);</string>
+	<key>base_msg</key>
+	<string>insert into base_msg (_id,title,cont,pubdate,isread,pid,url,video_url, video_path, sound_url, sound_path, updatetime, fileurl, filename, organization, publisher, visit_address,headRail,lastreplycount,pinyin,typcode,seq) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);</string>
+	<key>base_emp</key>
+	<string>insert into base_emp (pid,emp_id,name,biz_date,emp_type,login_emp_id,server_node) values (?,?,?,?,?,?,?);</string>
+	<key>base_store_acvt_dis</key>
+	<string>insert into base_store_acvt_dis (sid,acvtId,acvtQstId,acvt_qst_answer,gen_id,assetId,opt_value,is_search,newStoreId,server_node,emp_id,getTime) values (?,?,?,?,?,?,?,?,?,?,?,?);</string>
+	<key>base_store_prod_dis</key>
+	<string>insert into base_store_prod_dis (store_id,prod_id,dist,pri,inv,disp,sdisp,cmpt,oos,mtd,ord,gofa,aging,otherdicts,item1,item2,item3,item4,item5,item6,item7,item8,item9,item10,item11,item12,item13,item14,item15,item16,item17,item18,item19,item20,item21,item22,item23,item24,item25,item26,item27,item28,item29,item30,item31,item32,item33,item34,item35,item36,item37,item38,item39,item40,item41,item42,item43,item44,item45,item46,item47,item48,item49,item50,dt,dn,funccode,genid, server_node) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);</string>
+	<key>base_store_dict_dis</key>
+	<string>insert into base_store_dict_dis (emp_id,store_id,func_code,dict_id,col1,col2,col3,col4,col5,col6,col7,col8,col9,col10,col11,col12,col13,col14,col15,col16,col17,col18,col19,col20,col21,col22,col23,col24,col25,col26,col27,col28,col29,col30,col31,col32,col33,col34,col35,col36,col37,col38,col39,col40,assetId, server_node) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);</string>
+	<key>visit_store_status</key>
+	<string>insert into visit_store_status (emp_id,store_id,status,biz_date,func_code,is_plan,from_module) values (?,?,?,?,?,?,?);</string>
+	<key>visit_store_acvt_data</key>
+	<string>insert into visit_store_acvt_data (sid,acvtid,acvtqstid,acvt_qst_answer,gen_id,assetid,opt_value,emp_id,biz_date,newStoreId,mClickTime,server_node) values (?,?,?,?,?,?,?,?,?,?,?,?);</string>
+	<key>visit_store_acvt</key>
+	<string>insert into visit_store_acvt (store_id,acvt_id,biz_date,emp_id, sr_id, memo, gen_id) values (?,?,?,?,?,?,?);</string>
+	<key>user_behavior_statistics</key>
+	<string>insert into user_behavior_statistics (userAccount,empName,bizdate,parentFc,parentFuncName,fc,funcName,storeId,storeCode,storeName,sceneId,eventId,startTime,endTime,eventValue,genId) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)</string>
+	<key>base_store_distrule</key>
+	<string>INSERT INTO base_store_distrule(sid,drId,server_node) values (?,?,?);</string>
+	<key>bd_location_data</key>
+	<string>insert into bd_location_data (emp_id,loc_biz_date,lon,lat,loc_time,loc_addr,loc_date_time,loc_city,item2,item3) values (?,?,?,?,?,?,?,?,?,?);</string>
+	<key>base_store_info</key>
+	<string>INSERT INTO base_store_info(_id,info_type,col_name,col_value,typ,emp_or_store_id,group_id,empId) values (?,?,?,?,?,?,?,?);</string>
+	<key>base_store_dicts</key>
+	<string>INSERT INTO base_store_dicts(sid,dictId,empId,server_node,memo) values (?,?,?,?,?);</string>
+	<key>base_msg_store</key>
+	<string>insert into  base_msg_store (_id,store_id,msg_id ,isread,empId) values(?,?,?,?,?);</string>
+</dict>
+</plist>

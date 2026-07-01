@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1487" systemVersion="11G63" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="AddedStore" representedClassName="AddedStore" syncable="YES">
+        <attribute name="empid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="flag" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="md5" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="notify" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="store_id" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="AddedStoreQst" representedClassName="AddedStoreQst" syncable="YES">
+        <attribute name="md5" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="optId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="qstId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="qstType" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="value" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="AddedStore" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="AddedStoreQst" positionX="0" positionY="0" width="0" height="0"/>
+    </elements>
+</model>

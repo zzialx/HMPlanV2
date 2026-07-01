@@ -1,0 +1,103 @@
+function setValue()
+    local params = "[@][@]getGridRowIdAndNameArray[@]";
+    local rowIdAndNameArray = callQstWidgetMethodByQstCode("zhixingqingk", "callGridMethodWithParams:", params);
+    print("产品----->"..rowIdAndNameArray)
+    while true do
+        local pos = string.find(rowIdAndNameArray, "|");
+        if (not pos) then
+            break;
+        end
+        local sub_str = string.sub(rowIdAndNameArray, 1, pos - 1);
+        rowIdAndNameArray = string.sub(rowIdAndNameArray, pos + 1, #rowIdAndNameArray);
+        local posSub = string.find(sub_str, ",");
+        local prodId = string.sub(sub_str, 1, posSub - 1);
+        --颜色值
+        local item1 = callGridMethodByRowIdAndCol(prodId .. "@luaExtra", "item5", "getValue", "");
+        item1 = string.gsub(item1, "@luaExtra", "");
+        print("颜色值---->"..item1)
+        if item1 ~= nil and item1 ~= "" then
+            -- 给表格第一列设置颜色
+            local params = "[@][@]setItemTitleColor[@]"..prodId..",FF0000FF"
+            callQstWidgetMethodByQstCode("zhixingqingk","callGridMethodWithParams:",params);
+            -- local bgColorParams = "[@][@]setItemBgColor[@]"..prodId..",FFF8CBAD"
+            -- callQstWidgetMethodByQstCode("zhixingqingk","callGridMethodWithParams:",bgColorParams);
+        else
+            local params = "[@][@]setItemTitleColor[@]"..prodId..",FF00FF00"
+            callQstWidgetMethodByQstCode("zhixingqingk","callGridMethodWithParams:",params);
+           -- local bgColorParams = "[@][@]setItemBgColor[@]"..prodId..",FFF8CBAD"
+           -- callQstWidgetMethodByQstCode("zhixingqingk","callGridMethodWithParams:",bgColorParams);
+        end
+    end
+end
+
+function onCheck()
+    local params = "[@][@]getGridRowIdAndNameArray[@]";
+    local rowIdAndNameArray = callQstWidgetMethodByQstCode("zhixingqingk", "callGridMethodWithParams:", params);
+    print("产品----->"..rowIdAndNameArray)
+    local invTip = ""
+    local priTip = ""
+    while true do
+        local pos = string.find(rowIdAndNameArray, "|");
+        if (not pos) then
+            break;
+        end
+        local sub_str = string.sub(rowIdAndNameArray, 1, pos - 1);
+        rowIdAndNameArray = string.sub(rowIdAndNameArray, pos + 1, #rowIdAndNameArray);
+        local posSub = string.find(sub_str, ",");
+        local prodId = string.sub(sub_str, 1, posSub - 1);
+        local prodName = string.sub(sub_str,posSub + 1, #sub_str)
+
+        --库存
+        local inv = callGridMethodByRowIdAndCol(prodId .. "@luaExtra", "inv", "getValue", "");
+        inv = string.gsub(inv, "@luaExtra", "");
+        print("库存---->"..inv)
+        if inv == "" or inv == nil then
+            inv = 0
+        end
+        --填写价格
+        local item5 = callGridMethodByRowIdAndCol(prodId .. "@luaExtra", "item5", "getValue", "");
+        item5 = string.gsub(item5, "@luaExtra", "");
+        print("价格---->"..item5)
+
+        if tonumber(inv) > 0 and (item5 == "" or item5 == nil) then
+            if invTip=="" then
+                invTip = prodName
+            else
+                invTip = invTip..","..prodName;
+            end
+        end
+        if item5 ~= "" and item5 ~= nil then
+            --基准价格
+            local jzPrice = callGridMethodByRowIdAndCol(prodId .. "@luaExtra", "pri", "getValue", "");
+            if jzPrice == "" then
+                jzPrice = 0
+            end
+            local jzPrice_value = string.gsub(jzPrice, "@luaExtra", "");
+            local max_price = tonumber(jzPrice_value) * 2;
+            local min_price = tonumber(jzPrice_value) * 0.5;
+            local input_price = tonumber(item5);
+            if input_price == "" or input_price == nil then
+                input_price = 0
+            end
+            if input_price > max_price or input_price < min_price then
+                if priTip=="" then
+                    priTip = prodName
+                else
+                    priTip = priTip..","..prodName;
+                end
+                params = prodId .. "[@]item5[@]setTextColor[@]FFFF0000";
+                callQstWidgetMethodByQstCode("zhixingqingk", "callGridMethodWithParams:", params);
+            else
+                params = prodId .. "[@]item5[@]setTextColor[@]FF000000";
+                callQstWidgetMethodByQstCode("zhixingqingk", "callGridMethodWithParams:", params);
+            end
+        end
+    end
+    if priTip ~= "" then
+        setTip(priTip..":超出基准价格 -50%~200%，请确认价格填写是否有误");
+        return
+    end
+    if invTip ~= "" then
+        setTip(invTip.."库存不为0，价格必须填写");
+    end
+end
